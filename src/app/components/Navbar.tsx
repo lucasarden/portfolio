@@ -1,21 +1,5 @@
 import React from "react";
-
-const NavbarButton = ({
-  href,
-  children,
-  className = "text-lucas-main-color hover:bg-lucas-white-hover",
-}: {
-  href: string;
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <a
-    href={href}
-    className={`px-4 py-2 rounded-full font-semibold transition-colors ${className}`}
-  >
-    {children}
-  </a>
-);
+import RoundButton from "@/app/components/RoundButton";
 
 const RoundedSection = ({
   className = "",
@@ -34,40 +18,34 @@ const Navbar = () => {
     <div className="sticky top-0 bg-lucas-main-bg p-6 flex items-center justify-between z-50 pl-50 pr-50">
       {/* Left rounded section */}
       <RoundedSection className="px-8 py-3 space-x-8">
-        <h1 className="text-2xl font-bold text-lucas-main-color">
+        <RoundButton
+          href="/"
+          className="text-2xl font-bold text-lucas-main-color hover:bg-lucas-white-hover"
+        >
           Lucas Arden
-        </h1>
+        </RoundButton>
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <NavbarButton href="/">Home</NavbarButton>
+              <RoundButton href="/projects">Projects</RoundButton>
             </li>
             <li>
-              <NavbarButton href="/about">About</NavbarButton>
-            </li>
-            <li>
-              <NavbarButton href="/projects">Projects</NavbarButton>
-            </li>
-            <li>
-              <NavbarButton href="/contact">Contact</NavbarButton>
+              <RoundButton href="/contact">Contact</RoundButton>
             </li>
           </ul>
         </nav>
       </RoundedSection>
       {/* Right rounded section */}
       <RoundedSection className="px-6 py-3 space-x-4">
-        <NavbarButton
-          href="/login"
-          className="border border-lucas-main-color text-lucas-main-color bg-white hover:bg-lucas-white-hover"
-        >
+        <RoundButton href="/login" className="border-2 border-lucas-main-color">
           Login
-        </NavbarButton>
-        <NavbarButton
+        </RoundButton>
+        <RoundButton
           href="/create-account"
-          className="bg-lucas-main-color text-white hover:bg-[#3b5d47]"
+          className="bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
         >
           Create Account
-        </NavbarButton>
+        </RoundButton>
       </RoundedSection>
     </div>
   );
