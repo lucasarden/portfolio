@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -15,10 +12,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-lucas-main-color: #35465f;
+  --color-lucas-white-hover: #f3f3f3;
+  --color-lucas-main-bg: #fafaf9;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground: #0a0a0a;
-    --background: #ededed;
+    --background: #fafaf9;
   }
 }
 
