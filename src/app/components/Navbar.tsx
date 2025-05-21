@@ -1,17 +1,6 @@
 import React from "react";
 import RoundButton from "@/app/components/RoundButton";
-
-const RoundedSection = ({
-  className = "",
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => (
-  <div className={`flex items-center bg-white rounded-xl shadow ${className}`}>
-    {children}
-  </div>
-);
+import RoundedSection from "@/app/components/RoundedSection";
 
 const Navbar = () => {
   return (
