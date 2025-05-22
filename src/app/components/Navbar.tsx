@@ -4,7 +4,12 @@ import RoundedSection from "@/app/components/RoundedSection";
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 bg-lucas-main-bg p-6 flex items-center justify-between z-50 pl-50 pr-50">
+    <div
+      className="sticky top-0 backdrop-blur-md p-6 flex items-center justify-between z-50 pl-50 pr-50"
+      style={{
+        backgroundColor: "rgba(250, 250, 249, 0.8)",
+      }}
+    >
       {/* Left rounded section */}
       <RoundedSection className="px-8 py-3 space-x-8">
         <RoundButton

@@ -10,7 +10,7 @@ interface RoundButtonProps {
 const RoundButton = ({ href, children, className = "" }: RoundButtonProps) => {
   // Provide sensible defaults, but allow full override via className
   const baseClasses =
-    "px-4 py-2 rounded-full font-semibold transition-colors flex justify-center";
+    "px-4 py-2 rounded-full font-semibold transition-colors justify-center";
   const defaultText = "text-lucas-main-color";
   const defaultHover = "hover:bg-lucas-white-hover";
 

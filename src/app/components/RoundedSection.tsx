@@ -1,10 +1,10 @@
-export default function RoundedSection({
+const RoundedSection = ({
   className = "",
   children,
 }: {
   className?: string;
   children: React.ReactNode;
-}) {
+}) => {
   return (
     <div
       className={`flex items-center bg-white rounded-xl shadow ${className}`}
@@ -12,4 +12,6 @@ export default function RoundedSection({
       {children}
     </div>
   );
-}
+};
+
+export default RoundedSection;
