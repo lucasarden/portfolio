@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
+import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface MenuButtonProps {
   href: string;
@@ -28,14 +30,25 @@ const Navbar = () => {
   // Calculate the total height needed for the blur backdrop
   const expandedHeight =
     NAVBAR_HEIGHT + (menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0);
+  const menuHeight = menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0;
 
   return (
-    <div
-      className="sticky top-0 left-0 w-full z-50 backdrop-blur-md bg-lucas-main-bg/80 transition-all duration-300"
-      style={{ height: expandedHeight }}
-    >
+    <div className="relative z-50">
+      <motion.div
+        initial={{ height: NAVBAR_HEIGHT }}
+        animate={{
+          height: menuOpen ? expandedHeight : NAVBAR_HEIGHT,
+          transition: {
+            duration: 0.3,
+            ease: "easeInOut",
+            delay: menuOpen ? 0 : 0.1, // Add delay only when closing
+          },
+        }}
+        className="fixed top-0 left-0 w-full backdrop-blur-md bg-lucas-main-bg/80 z-[-1]"
+        style={{ pointerEvents: "none" }}
+      />
       {/* Navbar */}
-      <div className="flex items-center justify-between p-6 md:pl-50 md:pr-50">
+      <div className="fixed w-full flex items-center justify-between p-6 md:pl-50 md:pr-50">
         {/* Left rounded section */}
         <RoundedSection className="md:px-8 py-3 md:space-x-8">
           <RoundButton
@@ -56,7 +69,7 @@ const Navbar = () => {
           </nav>
         </RoundedSection>
         {/* Right rounded section */}
-        <RoundedSection className="flex px-4 py-3">
+        <RoundedSection className="flex px-4 py-3 md:space-x-4 md:px-8">
           <button
             className="block md:hidden"
             aria-label="Open menu"
@@ -88,14 +101,32 @@ const Navbar = () => {
         </RoundedSection>
       </div>
       {/* Dropdown menu */}
-      {menuOpen && (
-        <div className="flex flex-col items-center md:hidden">
-          <MenuButton href="/projects">Projects</MenuButton>
-          <MenuButton href="/contact">Contact</MenuButton>
-          <MenuButton href="/login">Login</MenuButton>
-          <MenuButton href="/create-account">Create Account</MenuButton>
-        </div>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.3, ease: "easeInOut", delay: 0.1 }, // fade in AFTER blur
+            }}
+            exit={{
+              opacity: 0,
+              y: -10,
+              transition: { duration: 0.2, ease: "easeInOut", delay: 0 }, // fade out IMMEDIATELY
+            }}
+            className="fixed left-0 w-full flex flex-col items-center md:hidden z-40"
+            style={{ top: `${NAVBAR_HEIGHT}px` }}
+          >
+            <MenuButton href="/projects">Projects</MenuButton>
+            <MenuButton href="/contact">Contact</MenuButton>
+            <MenuButton href="/login">Login</MenuButton>
+            <MenuButton href="/create-account">Create Account</MenuButton>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Spacer to push content below the navbar */}
+      <div className="h-[120px]" />
     </div>
   );
 };
