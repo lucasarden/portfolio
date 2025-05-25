@@ -7,7 +7,7 @@ interface TextPageWrapperProps {
 
 const TextPageWrapper = ({ children, className }: TextPageWrapperProps) => {
   return (
-    <main className={`container mx-auto p-20 py-10 ${className}`}>
+    <main className={`container mx-auto sm:p-5 sm:py-5 md:p-20 md:py-10 ${className}`}>
       {children}
     </main>
   );
