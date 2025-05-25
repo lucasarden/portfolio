@@ -21,7 +21,7 @@ export default function Home() {
       </Banner>
       <div className="flex justify-center my-8">
         <Image
-          src="/images/lucas.jpg"
+          src="/images/lucasarden.jpg"
           alt="Lucas Arden"
           width={300}
           height={300}
