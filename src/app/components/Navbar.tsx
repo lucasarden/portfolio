@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
 import clsx from "clsx";
@@ -32,8 +32,23 @@ const Navbar = () => {
     NAVBAR_HEIGHT + (menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0);
   const menuHeight = menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0;
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+    const handleResize = () => {
+      if (mediaQuery.matches) {
+        setMenuOpen(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
+
   return (
     <div className="relative z-50">
+      {/* Backdrop for the expanded menu */}
       <motion.div
         initial={{ height: NAVBAR_HEIGHT }}
         animate={{
