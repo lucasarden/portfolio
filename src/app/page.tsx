@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <main>
       <Banner>
-        <h1 className="text-4xl font-bold text-white">
+        <h1 className="text-4xl font-bold text-white text-center">
           Welcome to my Portfolio!
         </h1>
-        <p className="mt-2 text-lg text-white">
+        <p className="mt-2 text-lg text-white text-center">
           This is a simple portfolio site built with Next.js.
         </p>
         <RoundButton
