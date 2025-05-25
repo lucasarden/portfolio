@@ -33,14 +33,14 @@ export default function ChessboardProjectPage() {
           <motion.h2
             layoutId={`title-chessboard`}
             transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-            className="text-4xl font-bold mb-4"
+            className="text-4xl font-bold mb-4 text-center md:text-left"
           >
             {title}
           </motion.h2>
           <motion.p
             layoutId={`desc-chessboard`}
             transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-            className="text-lg mb-6 text-gray-700 max-w-3xl"
+            className="text-lg mb-6 text-gray-700 max-w-3xl text-center md:text-left"
           >
             A chessboard implementation using Python and Pygame.
           </motion.p>
