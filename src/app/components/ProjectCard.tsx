@@ -36,13 +36,13 @@ export default function ProjectCard({
           <motion.h2
             layoutId={`title-${layoutId}`}
             transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-            className="text-2xl font-semibold"
+            className="text-2xl font-semibold text-center md:text-left"
           >
             {title}
           </motion.h2>
           <motion.p
             layoutId={`desc-${layoutId}`}
-            className="mt-2"
+            className="mt-2 text-center md:text-left"
             transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
           >
             {description}
