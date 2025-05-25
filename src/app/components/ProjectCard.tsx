@@ -30,7 +30,7 @@ export default function ProjectCard({
       <motion.div
         layoutId={`card-${layoutId}`}
         transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-        className={`transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%] cursor-pointer mt-8 p-6 md:space-x-12 justify-center md:justify-between items-center flex flex-col md:flex-row bg-white rounded-xl shadow ${className}`}
+        className={`transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%] cursor-pointer mt-8 p-6 md:space-x-12 space-y-6 md:space-y-0 justify-center md:justify-between items-center flex flex-col md:flex-row bg-white rounded-xl shadow ${className}`}
       >
         <div>
           <motion.h2
