@@ -63,9 +63,9 @@ const Navbar = () => {
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
-      <div className="fixed w-full flex items-center justify-between p-6 md:pl-50 md:pr-50">
+      <div className="fixed w-full flex items-center justify-between p-6 md:px-8 lg:px-25 xl:px-50">
         {/* Left rounded section */}
-        <RoundedSection className="md:px-8 py-3 md:space-x-8">
+        <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
           <RoundButton
             href="/"
             className="text-2xl font-bold text-lucas-main-color hover:bg-lucas-white-hover"
@@ -73,7 +73,7 @@ const Navbar = () => {
             Lucas Arden
           </RoundButton>
           <nav>
-            <ul className="hidden md:flex space-x-6">
+            <ul className="hidden lg:flex space-x-6">
               <li>
                 <RoundButton href="/projects">Projects</RoundButton>
               </li>
@@ -84,9 +84,9 @@ const Navbar = () => {
           </nav>
         </RoundedSection>
         {/* Right rounded section */}
-        <RoundedSection className="flex px-4 py-3 md:space-x-4 md:px-8">
+        <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
           <button
-            className="block md:hidden"
+            className="block lg:hidden"
             aria-label="Open menu"
             onClick={() => setMenuOpen(!menuOpen)}
           >
@@ -103,13 +103,13 @@ const Navbar = () => {
           </button>
           <RoundButton
             href="/login"
-            className="hidden md:flex border-2 border-lucas-main-color"
+            className="hidden lg:flex border-2 border-lucas-main-color"
           >
             Login
           </RoundButton>
           <RoundButton
             href="/create-account"
-            className="hidden md:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+            className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
           >
             Create Account
           </RoundButton>
@@ -130,7 +130,7 @@ const Navbar = () => {
               y: -10,
               transition: { duration: 0.2, ease: "easeInOut", delay: 0 }, // fade out IMMEDIATELY
             }}
-            className="fixed left-0 w-full flex flex-col items-center md:hidden z-40"
+            className="fixed left-0 w-full flex flex-col items-center lg:hidden z-40"
             style={{ top: `${NAVBAR_HEIGHT}px` }}
           >
             <MenuButton href="/projects">Projects</MenuButton>
