@@ -1,12 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import RoundButton from "@/app/components/RoundButton";
 
 export default function ChessboardProjectPage() {
-  const router = useRouter();
   const title = "Project 1: Chessboard";
 
   return (
@@ -14,33 +12,33 @@ export default function ChessboardProjectPage() {
       <motion.div
         layoutId={`card-chessboard`}
         transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-        className="relative flex flex-col md:flex-row items-center justify-between bg-white w-screen px-20 py-5 md:px-30 md:py-10 lg:px-50"
+        className="relative flex flex-col lg:flex-row items-center justify-between bg-white w-screen space-y-6 px-20 py-5 md:px-30 md:py-10 xl:px-50"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="hidden md:flex md:absolute md:top-7 lg:top-10 md:left-30 lg:left-50 z-10"
+          className="hidden lg:flex lg:absolute lg:top-10 lg:left-30 xl:left-50 z-10"
         >
-          <button
-            onClick={() => router.back()}
-            className="cursor-pointer bg-lucas-main-color hover:bg-lucas-main-color-hover text-white mb-8 px-3 py-3 rounded-full font-semibold transition-colors justify-center"
+          <RoundButton
+            href="/projects"
+            className="cursor-pointer bg-lucas-main-color hover:bg-lucas-main-color-hover text-white font-semibold transition-colors justify-center"
           >
             ← Back to projects
-          </button>
+          </RoundButton>
         </motion.div>
         <div>
           <motion.h2
             layoutId={`title-chessboard`}
             transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-            className="text-4xl font-bold mb-4 text-center md:text-left"
+            className="text-2xl font-semibold text-center lg:text-left"
           >
             {title}
           </motion.h2>
           <motion.p
             layoutId={`desc-chessboard`}
             transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
-            className="text-lg mb-6 text-gray-700 max-w-3xl text-center md:text-left"
+            className="mt-2 text-center lg:text-left"
           >
             A chessboard implementation using Python and Pygame.
           </motion.p>

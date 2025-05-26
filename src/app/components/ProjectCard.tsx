@@ -29,30 +29,24 @@ export default function ProjectCard({
     <Link href={href}>
       <motion.div
         layoutId={`card-${layoutId}`}
-        transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-        className={`transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%] cursor-pointer mt-8 p-6 md:space-x-12 space-y-6 md:space-y-0 justify-center md:justify-between items-center flex flex-col md:flex-row bg-white rounded-xl shadow ${className}`}
+        className={`transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%] cursor-pointer mt-8 p-6 lg:space-x-12 space-y-6 lg:space-y-0 justify-center lg:justify-between items-center flex flex-col lg:flex-row bg-white rounded-xl shadow ${className}`}
       >
         <div>
           <motion.h2
             layoutId={`title-${layoutId}`}
-            transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-            className="text-2xl font-semibold text-center md:text-left"
+            className="text-2xl font-semibold text-center lg:text-left"
           >
             {title}
           </motion.h2>
           <motion.p
             layoutId={`desc-${layoutId}`}
-            className="mt-2 text-center md:text-left"
-            transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
+            className="mt-2 text-center lg:text-left"
           >
             {description}
           </motion.p>
           {children}
         </div>
-        <motion.div
-          layoutId={`img-${layoutId}`}
-          transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-        >
+        <motion.div layoutId={`img-${layoutId}`}>
           <Image
             src={imageSrc}
             alt={imageAlt}
