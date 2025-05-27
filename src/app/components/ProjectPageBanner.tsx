@@ -22,6 +22,19 @@ export default function ProjectPageBanner({
       transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
       className="bg-white w-full"
     >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="lg:hidden flex items-center pt-5 px-8 max-w-350 mx-auto"
+      >
+        <RoundButton
+          href="/projects"
+          className="cursor-pointer bg-lucas-main-color hover:bg-lucas-main-color-hover text-white font-semibold transition-colors justify-center"
+        >
+          ← Back to projects
+        </RoundButton>
+      </motion.div>
       <div className="relative flex flex-col mx-auto lg:flex-row items-center justify-between space-y-6 lg:space-y-0 py-5 px-8 lg:px-30 max-w-350">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -20,7 +20,7 @@ export default function ChessboardProjectPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="max-w-3xl mx-auto mt-20"
+          className="max-w-350 mx-auto mt-20 px-8 lg:px-30"
         >
           {/* View Code button */}
           <a
