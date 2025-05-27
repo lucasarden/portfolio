@@ -5,14 +5,32 @@ interface RoundButtonProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 }
 
-const RoundButton = ({ href, children, className = "" }: RoundButtonProps) => {
+const RoundButton = ({
+  href,
+  children,
+  className = "",
+  disabled,
+}: RoundButtonProps) => {
   // Provide sensible defaults, but allow full override via className
   const baseClasses =
     "px-4 py-2 rounded-full font-semibold transition-colors justify-center";
   const defaultText = "text-lucas-main-color";
   const defaultHover = "hover:bg-lucas-white-hover";
+  const disabledClasses = "opacity-50 cursor-not-allowed";
+
+  if (disabled) {
+    return (
+      <span
+        className={clsx(baseClasses, defaultText, disabledClasses, className)}
+        aria-disabled="true"
+      >
+        {children}
+      </span>
+    );
+  }
 
   return (
     <a
