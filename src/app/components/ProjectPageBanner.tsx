@@ -68,15 +68,15 @@ export default function ProjectPageBanner({
 
         <motion.div
           layoutId={`img-${layoutId}`}
-          className="mb-6"
+          className="mb-6 shadow-md rounded-md overflow-hidden"
           transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
         >
           <Image
             src={`/images/${layoutId}.gif`}
-            alt="Chessboard"
+            alt={`${layoutId} project image`}
             width={400}
             height={400}
-            className="rounded-md"
+            className="object-cover"
           />
         </motion.div>
       </div>
