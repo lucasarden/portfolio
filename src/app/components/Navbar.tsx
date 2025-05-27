@@ -30,10 +30,9 @@ const Navbar = () => {
   // Calculate the total height needed for the blur backdrop
   const expandedHeight =
     NAVBAR_HEIGHT + (menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0);
-  const menuHeight = menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0;
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
 
     const handleResize = () => {
       if (mediaQuery.matches) {
@@ -63,57 +62,59 @@ const Navbar = () => {
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
-      <div className="fixed w-full flex items-center justify-between p-6 md:px-8 lg:px-25 xl:px-50">
-        {/* Left rounded section */}
-        <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
-          <RoundButton
-            href="/"
-            className="text-2xl font-bold text-lucas-main-color hover:bg-lucas-white-hover"
-          >
-            Lucas Arden
-          </RoundButton>
-          <nav>
-            <ul className="hidden lg:flex space-x-6">
-              <li>
-                <RoundButton href="/projects">Projects</RoundButton>
-              </li>
-              <li>
-                <RoundButton href="/contact">Contact</RoundButton>
-              </li>
-            </ul>
-          </nav>
-        </RoundedSection>
-        {/* Right rounded section */}
-        <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
-          <button
-            className="block lg:hidden"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {/* Hamburger icon SVG */}
-            <svg
-              width="32"
-              height="32"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+      <div className="fixed w-full">
+        <div className="flex items-center justify-between p-6 px-8 max-w-350 mx-auto">
+          {/* Left rounded section */}
+          <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
+            <RoundButton
+              href="/"
+              className="text-2xl font-bold text-lucas-main-color hover:bg-lucas-white-hover"
             >
-              <path d="M6 10h20M6 16h20M6 22h20" />
-            </svg>
-          </button>
-          <RoundButton
-            href="/login"
-            className="hidden lg:flex border-2 border-lucas-main-color"
-          >
-            Login
-          </RoundButton>
-          <RoundButton
-            href="/create-account"
-            className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
-          >
-            Create Account
-          </RoundButton>
-        </RoundedSection>
+              Lucas Arden
+            </RoundButton>
+            <nav>
+              <ul className="hidden lg:flex space-x-6">
+                <li>
+                  <RoundButton href="/projects">Projects</RoundButton>
+                </li>
+                <li>
+                  <RoundButton href="/contact">Contact</RoundButton>
+                </li>
+              </ul>
+            </nav>
+          </RoundedSection>
+          {/* Right rounded section */}
+          <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
+            <button
+              className="block lg:hidden"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {/* Hamburger icon SVG */}
+              <svg
+                width="32"
+                height="32"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M6 10h20M6 16h20M6 22h20" />
+              </svg>
+            </button>
+            <RoundButton
+              href="/login"
+              className="hidden lg:flex border-2 border-lucas-main-color"
+            >
+              Login
+            </RoundButton>
+            <RoundButton
+              href="/create-account"
+              className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+            >
+              Create Account
+            </RoundButton>
+          </RoundedSection>
+        </div>
       </div>
       {/* Dropdown menu */}
       <AnimatePresence>
