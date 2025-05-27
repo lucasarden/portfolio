@@ -1,18 +1,18 @@
 "use client";
 import { motion } from "framer-motion";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
-import RoundButton from "@/app/components/RoundButton";
 import ProjectPageBanner from "@/app/components/ProjectPageBanner";
 
 export default function PortfolioProjectPage() {
-  const title = "Project 1: Portfolio";
+  const title = "Project 2: Portfolio";
   const description =
     "A personal portfolio website built with Next.js and Tailwind CSS.";
 
   return (
     <>
       <ProjectPageBanner
-        layoutId="portfolio"
+        imageSrc="/images/portfolio.gif"
+        imageAlt="Portfolio"
         title={title}
         description={description}
       />
@@ -20,8 +20,8 @@ export default function PortfolioProjectPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="max-w-350 mx-auto mt-20 px-8 lg:px-30"
+          transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
+          className="max-w-275 mx-auto mt-20"
         >
           {/* View Code button */}
           <a

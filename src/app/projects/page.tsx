@@ -6,14 +6,14 @@ export default function Projects() {
     <TextPageWrapper>
       <h1 className="text-4xl font-bold">My Projects</h1>
       <p className="text-lg">Here are some of the projects I've worked on:</p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <div className="flex flex-col gap-6">
         <ProjectCard
           title="Project 1: Chessboard"
           description="A chessboard implementation using Python and Pygame."
           imageSrc="/images/chessboard.gif"
           imageAlt="Chessboard"
           href="/projects/chessboard"
-          layoutId="chessboard"
+          key="chessboard"
         />
         <ProjectCard
           title="Project 2: Portfolio"
@@ -21,7 +21,7 @@ export default function Projects() {
           imageSrc="/images/portfolio.gif"
           imageAlt="Portfolio"
           href="/projects/portfolio"
-          layoutId="portfolio"
+          key="portfolio"
         />
       </div>
     </TextPageWrapper>

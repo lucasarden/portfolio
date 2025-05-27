@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
-import RoundButton from "@/app/components/RoundButton";
+import { AnimatePresence } from "framer-motion";
 import ProjectPageBanner from "@/app/components/ProjectPageBanner";
 
 export default function ChessboardProjectPage() {
@@ -11,7 +11,8 @@ export default function ChessboardProjectPage() {
   return (
     <>
       <ProjectPageBanner
-        layoutId="chessboard"
+        imageSrc="/images/chessboard.gif"
+        imageAlt="Chessboard"
         title={title}
         description={description}
       />
@@ -19,7 +20,7 @@ export default function ChessboardProjectPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
           className="max-w-350 mx-auto mt-20 px-8 lg:px-30"
         >
           {/* View Code button */}
