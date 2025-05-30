@@ -1,30 +1,36 @@
+"use client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import RoundedSection from "@/app/components/RoundedSection";
-import RoundButton from "@/app/components/RoundButton";
 export default function Login() {
+  const { data: session } = useSession();
   return (
     <main className="flex items-center justify-center py-20">
       <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
-        <h1 className="text-4xl font-bold">Login</h1>
-        <p className="mt-4 text-lg">Please enter your credentials to log in.</p>
-        <form className="flex flex-col space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="border border-gray-300 rounded-lg p-2"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="border border-gray-300 rounded-lg p-2"
-          />
-          <RoundButton
-            className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover"
-            href="/projects"
-            disabled={true}
+        <h1 className="text-4xl font-bold">{session ? "Welcome!" : "Login"}</h1>
+
+        <p className="mt-4 text-lg">
+          {session
+            ? `You're signed in as ${session.user?.email}`
+            : "Please sign in with one of the providers below."}
+        </p>
+
+        {session ? (
+          <button
+            onClick={() => signOut()}
+            className="bg-red-500 text-white rounded-lg p-2 hover:bg-red-600"
           >
-            Coming Soon...
-          </RoundButton>
-        </form>
+            Sign Out
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() => signIn("github")}
+              className="bg-black text-white rounded-lg p-2 hover:bg-gray-800"
+            >
+              Sign in with GitHub
+            </button>
+          </>
+        )}
       </RoundedSection>
     </main>
   );
