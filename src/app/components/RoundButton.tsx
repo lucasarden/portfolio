@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import clsx from "clsx";
 
 interface RoundButtonProps {
@@ -33,7 +34,7 @@ const RoundButton = ({
   }
 
   return (
-    <a
+    <Link
       href={href}
       className={clsx(
         baseClasses,
@@ -45,7 +46,7 @@ const RoundButton = ({
       )}
     >
       {children}
-    </a>
+    </Link>
   );
 };
 

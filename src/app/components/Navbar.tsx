@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
-import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MenuButtonProps {
@@ -62,7 +62,7 @@ const Navbar = () => {
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
-      <div className="fixed w-full">
+      <div className="fixed w-screen">
         <div className="flex items-center justify-between p-6 px-8 max-w-350 mx-auto">
           {/* Left rounded section */}
           <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
