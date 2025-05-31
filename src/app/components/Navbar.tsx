@@ -51,12 +51,12 @@ const Navbar = () => {
     href = "",
     children,
     className = "",
-    onClick,
+    onClick = () => setMenuOpen(false),
   }: MenuButtonProps) => (
     <Link
       href={href}
       className={`w-full text-center py-4 px-4 font-semibold ${className}`}
-      onClick={() => setMenuOpen(false)}
+      onClick={onClick}
     >
       {children}
     </Link>
