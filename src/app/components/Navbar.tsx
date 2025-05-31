@@ -5,6 +5,7 @@ import Link from "next/link";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface MenuButtonProps {
   href?: string;
@@ -20,6 +21,7 @@ const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
   // Calculate the total height needed for the blur backdrop
   const expandedHeight =
@@ -41,10 +43,11 @@ const Navbar = () => {
 
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMenuOpen(false);
 
     await signOut();
 
-    window.location.reload();
+    router.push("/login");
   };
 
   const MenuButton = ({
@@ -139,15 +142,48 @@ const Navbar = () => {
                 aria-label="Open menu"
                 onClick={() => setMenuOpen(!menuOpen)}
               >
-                {/* Hamburger icon SVG */}
                 <svg
                   width="32"
                   height="32"
+                  viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="hamburger"
                 >
-                  <path d="M6 10h20M6 16h20M6 22h20" />
+                  <line
+                    x1="4"
+                    y1="6"
+                    x2="20"
+                    y2="6"
+                    className={`transition-transform duration-300 origin-center ${
+                      menuOpen
+                        ? "rotate-45 translate-y-[4px] -translate-x-[4px]"
+                        : ""
+                    }`}
+                  />
+                  <line
+                    x1="4"
+                    y1="12"
+                    x2="20"
+                    y2="12"
+                    className={`transition-transform duration-300 ${
+                      menuOpen
+                        ? "-rotate-45 translate-y-[12px] -translate-x-[5px]"
+                        : ""
+                    }`}
+                  />
+                  <line
+                    x1="4"
+                    y1="18"
+                    x2="20"
+                    y2="18"
+                    className={`transition-all duration-300 origin-center ${
+                      menuOpen ? "opacity-0 translate-y-1" : ""
+                    }`}
+                  />
                 </svg>
               </button>
               <RoundButton

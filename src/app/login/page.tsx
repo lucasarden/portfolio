@@ -5,17 +5,19 @@ import { useRouter } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
 
 export default function Login() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -24,6 +26,7 @@ export default function Login() {
     });
 
     if (res?.error) {
+      setLoading(false);
       setError("Invalid credentials");
     } else {
       router.push("/my-account");
@@ -35,19 +38,6 @@ export default function Login() {
       router.push("/my-account");
     }
   }, [status, router]);
-
-  if (status === "loading") {
-    return (
-      <main className="flex items-center justify-center py-20">
-        <RoundedSection className="flex-col justify-center py-8 px-25 h-100 w-md space-y-4">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
-          <span className="text-lg text-lucas-main-color font-semibold">
-            Loading...
-          </span>
-        </RoundedSection>
-      </main>
-    );
-  }
 
   return (
     <main className="flex items-center justify-center py-20">
@@ -72,12 +62,18 @@ export default function Login() {
             className="border border-gray-300 rounded-lg p-2"
             required
           />
-          <button
-            type="submit"
-            className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover font-semibold cursor-pointer"
-          >
-            Login
-          </button>
+          {loading ? (
+            <span className="text-center bg-lucas-main-color-hover text-white rounded-lg p-2 font-semibold cursor-not-allowed opacity-50">
+              Login
+            </span>
+          ) : (
+            <button
+              type="submit"
+              className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover font-semibold cursor-pointer"
+            >
+              Login
+            </button>
+          )}
         </form>
         <div className="flex items-center gap-3 w-full my-4">
           <div className="flex-grow h-1 bg-gray-300 rounded-md" />

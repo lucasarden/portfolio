@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
-import RoundButton from "@/app/components/RoundButton";
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -12,6 +11,7 @@ export default function CreateAccount() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +28,8 @@ export default function CreateAccount() {
       return;
     }
 
+    setLoading(true);
+
     const res = await fetch("/api/signup", {
       method: "POST",
       body: JSON.stringify({ email, password, name }),
@@ -43,8 +45,31 @@ export default function CreateAccount() {
     }
 
     setSuccess("Account created! Redirecting to login...");
-    setTimeout(() => router.push("/login"), 2000);
+    setTimeout(() => {
+      router.push("/login");
+    }, 1700);
   };
+
+  if (loading) {
+    return (
+      <main className="flex items-center justify-center py-20">
+        <RoundedSection className="flex-col justify-center py-8 px-25 w-[484px] space-y-4 h-[512px]">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
+          {success ? (
+            <span className="text-lg text-lucas-main-color font-semibold text-center">
+              {success}
+            </span>
+          ) : (
+            <>
+              <span className="text-lg text-lucas-main-color font-semibold text-center">
+                Loading...
+              </span>
+            </>
+          )}
+        </RoundedSection>
+      </main>
+    );
+  }
 
   return (
     <main className="flex items-center justify-center py-20">
