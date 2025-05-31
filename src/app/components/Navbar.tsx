@@ -7,9 +7,10 @@ import RoundedSection from "@/app/components/RoundedSection";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MenuButtonProps {
-  href: string;
+  href?: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const MENU_ITEM_COUNT = 4; // Number of dropdown items
@@ -46,7 +47,12 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  const MenuButton = ({ href, children, className = "" }: MenuButtonProps) => (
+  const MenuButton = ({
+    href = "",
+    children,
+    className = "",
+    onClick,
+  }: MenuButtonProps) => (
     <Link
       href={href}
       className={`w-full text-center py-4 px-4 font-semibold ${className}`}
@@ -180,8 +186,17 @@ const Navbar = () => {
           >
             <MenuButton href="/projects">Projects</MenuButton>
             <MenuButton href="/contact">Contact</MenuButton>
-            <MenuButton href="/login">Login</MenuButton>
-            <MenuButton href="/create-account">Create Account</MenuButton>
+            {session && session.user ? (
+              <>
+                <MenuButton href="/my-account">My Account</MenuButton>
+                <MenuButton onClick={handleLogout}>Log Out</MenuButton>
+              </>
+            ) : (
+              <>
+                <MenuButton href="/login">Login</MenuButton>
+                <MenuButton href="/create-account">Create Account</MenuButton>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
