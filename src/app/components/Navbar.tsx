@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,21 +12,13 @@ interface MenuButtonProps {
   className?: string;
 }
 
-const MenuButton = ({ href, children, className = "" }: MenuButtonProps) => (
-  <a
-    href={href}
-    className={`w-full text-center py-4 px-4 font-semibold ${className}`}
-  >
-    {children}
-  </a>
-);
-
 const MENU_ITEM_COUNT = 4; // Number of dropdown items
 const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
 const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   // Calculate the total height needed for the blur backdrop
   const expandedHeight =
@@ -44,6 +37,24 @@ const Navbar = () => {
 
     return () => mediaQuery.removeEventListener("change", handleResize);
   }, []);
+
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await signOut();
+
+    window.location.reload();
+  };
+
+  const MenuButton = ({ href, children, className = "" }: MenuButtonProps) => (
+    <Link
+      href={href}
+      className={`w-full text-center py-4 px-4 font-semibold ${className}`}
+      onClick={() => setMenuOpen(false)}
+    >
+      {children}
+    </Link>
+  );
 
   return (
     <div className="relative z-50">
@@ -84,36 +95,69 @@ const Navbar = () => {
             </nav>
           </RoundedSection>
           {/* Right rounded section */}
-          <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
-            <button
-              className="block lg:hidden"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {/* Hamburger icon SVG */}
-              <svg
-                width="32"
-                height="32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+          {session && session.user ? (
+            <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
+              <button
+                className="block lg:hidden"
+                aria-label="Open menu"
+                onClick={() => setMenuOpen(!menuOpen)}
               >
-                <path d="M6 10h20M6 16h20M6 22h20" />
-              </svg>
-            </button>
-            <RoundButton
-              href="/login"
-              className="hidden lg:flex border-2 border-lucas-main-color"
-            >
-              Login
-            </RoundButton>
-            <RoundButton
-              href="/create-account"
-              className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
-            >
-              Create Account
-            </RoundButton>
-          </RoundedSection>
+                {/* Hamburger icon SVG */}
+                <svg
+                  width="32"
+                  height="32"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M6 10h20M6 16h20M6 22h20" />
+                </svg>
+              </button>
+              <RoundButton
+                onClick={handleLogout}
+                className="hidden lg:flex border-2 border-lucas-main-color"
+              >
+                Log Out
+              </RoundButton>
+              <RoundButton
+                href="/my-account"
+                className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+              >
+                My Account
+              </RoundButton>
+            </RoundedSection>
+          ) : (
+            <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
+              <button
+                className="block lg:hidden"
+                aria-label="Open menu"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {/* Hamburger icon SVG */}
+                <svg
+                  width="32"
+                  height="32"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M6 10h20M6 16h20M6 22h20" />
+                </svg>
+              </button>
+              <RoundButton
+                href="/login"
+                className="hidden lg:flex border-2 border-lucas-main-color"
+              >
+                Login
+              </RoundButton>
+              <RoundButton
+                href="/create-account"
+                className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+              >
+                Create Account
+              </RoundButton>
+            </RoundedSection>
+          )}
         </div>
       </div>
       {/* Dropdown menu */}

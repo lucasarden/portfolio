@@ -6,12 +6,17 @@ import { compare } from "bcrypt";
 import prisma from "@/lib/prisma";
 
 const handler = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
      CredentialsProvider({
+      id: "credentials",
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
@@ -40,7 +45,7 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login"
-  }
+  },
 }) satisfies NextAuthOptions;
 
 export { handler as GET, handler as POST };

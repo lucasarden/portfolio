@@ -53,9 +53,9 @@ export default function CreateAccount() {
         <p className="mt-4 text-lg">
           Fill out the form to create your account.
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4 py-4">
           <input
-            type="text"
+            type="name"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -87,7 +87,7 @@ export default function CreateAccount() {
           />
           <button
             type="submit"
-            className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover"
+            className="font-semibold cursor-pointer bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover"
           >
             Create Account
           </button>

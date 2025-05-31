@@ -3,17 +3,19 @@ import Link from "next/link";
 import clsx from "clsx";
 
 interface RoundButtonProps {
-  href: string;
+  href?: string;
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const RoundButton = ({
-  href,
+  href = "",
   children,
   className = "",
   disabled,
+  onClick,
 }: RoundButtonProps) => {
   // Provide sensible defaults, but allow full override via className
   const baseClasses =
@@ -36,6 +38,7 @@ const RoundButton = ({
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={clsx(
         baseClasses,
         // Only add default text color if not present in className

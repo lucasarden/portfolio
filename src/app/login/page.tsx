@@ -1,11 +1,11 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
 
 export default function Login() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -26,32 +26,24 @@ export default function Login() {
     if (res?.error) {
       setError("Invalid credentials");
     } else {
-      router.push("/projects");
+      router.push("/my-account");
     }
   };
 
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/my-account");
+    }
+  }, [status, router]);
 
-    await signOut();
-
-    window.location.reload();
-  };
-
-  if (session && session.user) {
+  if (status === "loading") {
     return (
       <main className="flex items-center justify-center py-20">
-        <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
-          <h1 className="text-4xl font-bold">Welcome!</h1>
-          <p className="mt-4 text-lg">You are currently logged in as:</p>
-          <p className="mt-1 text-lg">{session.user.email}</p>
-          <button
-            onClick={handleLogout}
-            className="bg-lucas-main-color text-white rounded-md p-2 hover:bg-lucas-main-color-hover cursor-pointer"
-          >
-            Log Out
-          </button>
+        <RoundedSection className="flex-col justify-center py-8 px-25 h-100 w-md space-y-4">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
+          <span className="text-lg text-lucas-main-color font-semibold">
+            Loading...
+          </span>
         </RoundedSection>
       </main>
     );
@@ -59,7 +51,7 @@ export default function Login() {
 
   return (
     <main className="flex items-center justify-center py-20">
-      <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
+      <RoundedSection className="flex-col justify-center py-8 px-5 space-y-4 w-full max-w-110">
         <h1 className="text-4xl font-bold">Login</h1>
         <p className="mt-4 text-lg">Please enter your credentials to log in.</p>
 
@@ -82,7 +74,7 @@ export default function Login() {
           />
           <button
             type="submit"
-            className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover"
+            className="bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover font-semibold cursor-pointer"
           >
             Login
           </button>
@@ -95,12 +87,14 @@ export default function Login() {
           <div className="flex-grow h-1 bg-gray-300 rounded-md" />
         </div>
         <p className="mt-4 text-lg">Sign in with one of the providers below:</p>
-        <button
-          onClick={() => signIn("github")}
-          className="bg-black text-white rounded-lg p-2 hover:bg-gray-800"
-        >
-          Sign in with GitHub
-        </button>
+        <div className="mx-auto w-full max-w-55 flex flex-col space-y-4">
+          <button
+            onClick={() => signIn("github")}
+            className="bg-black text-white rounded-lg p-2 hover:bg-gray-800 font-semibold cursor-pointer"
+          >
+            Sign in with GitHub
+          </button>
+        </div>
         {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
         {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
       </RoundedSection>
