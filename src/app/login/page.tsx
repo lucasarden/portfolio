@@ -1,18 +1,26 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
+import Link from "next/link";
 
 export default function Login() {
   const { status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("verified") === "true") {
+      setSuccess("Your email has been verified. You can now log in.");
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +35,11 @@ export default function Login() {
 
     if (res?.error) {
       setLoading(false);
-      setError("Invalid credentials");
+      if (res.error === "Email not verified") {
+        setError("Please verify your email before logging in.");
+      } else {
+        setError("Invalid credentials");
+      }
     } else {
       router.push("/my-account");
     }
@@ -93,6 +105,15 @@ export default function Login() {
         </div>
         {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
         {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
+        <p className="mt-4 text-md text-gray-700">
+          Don't have an account?{" "}
+          <Link
+            href="/create-account"
+            className="text-lucas-main-color underline hover:text-lucas-main-color-hover"
+          >
+            Create One
+          </Link>
+        </p>
       </RoundedSection>
     </main>
   );

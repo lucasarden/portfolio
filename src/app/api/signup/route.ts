@@ -1,5 +1,7 @@
 import { hash } from "bcrypt";
 import prisma from "@/lib/prisma";
+import { sendVerificationEmail } from "@/lib/email";
+import crypto from "crypto";
 
 export async function POST(req: Request) {
   try {
@@ -24,7 +26,22 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response("Account created", { status: 201 });
+    const token = crypto.randomBytes(32).toString("hex");
+    const expires = new Date(Date.now() + 60 * 60 * 1000);
+
+    await prisma.verificationToken.create({
+      data: {
+        identifier: email,
+        token,
+        expires,
+      },
+    });
+
+    await sendVerificationEmail(email, token);
+
+    return new Response("Account created. Please check your email to verify.", {
+      status: 201,
+    });
   } catch (err) {
     console.error(err);
     return new Response("Internal Server Error", { status: 500 });

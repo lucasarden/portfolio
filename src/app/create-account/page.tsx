@@ -43,11 +43,8 @@ export default function CreateAccount() {
       setError(text || "Something went wrong.");
       return;
     }
-
-    setSuccess("Account created! Redirecting to login...");
-    setTimeout(() => {
-      router.push("/login");
-    }, 1700);
+    const successText = await res.text();
+    setSuccess(successText);
   };
 
   if (loading) {

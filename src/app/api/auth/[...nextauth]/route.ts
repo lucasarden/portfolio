@@ -15,7 +15,7 @@ const handler = NextAuth({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
-     CredentialsProvider({
+    CredentialsProvider({
       id: "credentials",
       name: "credentials",
       credentials: {
@@ -38,13 +38,17 @@ const handler = NextAuth({
         const isValid = await compare(credentials.password, user.password);
         if (!isValid) return null;
 
+        if (!user.emailVerified) {
+          throw new Error("Email not verified");
+        }
+
         return user;
       },
-     }),
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login"
+    signIn: "/login",
   },
 }) satisfies NextAuthOptions;
 
