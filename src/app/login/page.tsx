@@ -1,6 +1,6 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
 import Link from "next/link";
@@ -52,6 +52,7 @@ export default function Login() {
   }, [status, router]);
 
   return (
+    <Suspense>
     <main className="flex items-center justify-center py-20">
       <RoundedSection className="flex-col justify-center py-8 px-5 space-y-4 w-full max-w-110">
         <h1 className="text-4xl font-bold">Login</h1>
@@ -116,5 +117,6 @@ export default function Login() {
         </p>
       </RoundedSection>
     </main>
+    </Suspense>
   );
 }
