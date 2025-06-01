@@ -1,26 +1,20 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";
+import VerifiedMessage from "@/app/components/VerifiedMessage";
 import Link from "next/link";
 
 export default function Login() {
   const { status } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (searchParams.get("verified") === "true") {
-      setSuccess("Your email has been verified. You can now log in.");
-    }
-  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +46,10 @@ export default function Login() {
   }, [status, router]);
 
   return (
+    <>
     <Suspense>
+        <VerifiedMessage setSuccess={setSuccess} />
+    </Suspense>
     <main className="flex items-center justify-center py-20">
       <RoundedSection className="flex-col justify-center py-8 px-5 space-y-4 w-full max-w-110">
         <h1 className="text-4xl font-bold">Login</h1>
@@ -117,6 +114,6 @@ export default function Login() {
         </p>
       </RoundedSection>
     </main>
-    </Suspense>
+    </>
   );
 }
