@@ -2,7 +2,11 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-export default function VerifiedMessage({ setSuccess }: { setSuccess: (msg: string) => void }) {
+export default function VerifiedMessage({
+  setSuccess,
+}: {
+  setSuccess: (msg: string) => void;
+}) {
   const searchParams = useSearchParams();
 
   useEffect(() => {

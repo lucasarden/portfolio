@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       },
     });
 
-    await sendVerificationEmail(email, token);
+    await sendVerificationEmail(email, token, name);
 
     return new Response("Account created. Please check your email to verify.", {
       status: 201,
