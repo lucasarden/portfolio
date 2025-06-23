@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import RoundButton from "@/app/components/RoundButton";
 
-export default function myAccount() {
+export default function MyAccount() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const handleLogout = async (e: React.FormEvent) => {
