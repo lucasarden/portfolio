@@ -5,9 +5,9 @@ import prisma from "@/lib/prisma";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { projectId: string } }
+  { params }: { params: { projectId: string } }
 ) {
-  const { projectId } = await context.params;
+  const { projectId } = await params;
   const comments = await prisma.comment.findMany({
     where: { projectId },
     orderBy: { createdAt: "desc" },
@@ -25,9 +25,9 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  context: { params: { projectId: string } }
+  { params }: { params: { projectId: string } }
 ) {
-  const { projectId } = await context.params;
+  const { projectId } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id || !session?.user?.name) {
