@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import RoundedSection from "@/app/components/RoundedSection";

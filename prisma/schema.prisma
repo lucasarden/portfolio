@@ -23,6 +23,16 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  comments      Comment[] @relation("UserComments")
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation("UserComments", fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  projectId String
+  createdAt DateTime @default(now())
 }
 
 model Account {

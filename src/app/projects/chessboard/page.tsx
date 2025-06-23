@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
-import { AnimatePresence } from "framer-motion";
 import ProjectPageBanner from "@/app/components/ProjectPageBanner";
+import CommentSection from "@/app/components/CommentSection";
 
 export default function ChessboardProjectPage() {
   const title = "Project 1: Chessboard";
@@ -67,6 +67,7 @@ export default function ChessboardProjectPage() {
             </p>
           </div>
         </motion.div>
+        <CommentSection projectId="chessboard" />
       </TextPageWrapper>
     </>
   );

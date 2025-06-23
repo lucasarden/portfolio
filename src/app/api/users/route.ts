@@ -23,6 +23,7 @@ export async function POST(req: Request) {
         email,
         name,
         password: hashedPassword,
+        image: `https://api.dicebear.com/7.x/thumbs/svg?seed=${encodeURIComponent(name)}`,
       },
     });
 

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import ProjectPageBanner from "@/app/components/ProjectPageBanner";
+import CommentSection from "@/app/components/CommentSection";
 
 export default function PortfolioProjectPage() {
   const title = "Project 2: Portfolio";
@@ -37,9 +38,9 @@ export default function PortfolioProjectPage() {
           <div className="mb-6">
             <h4 className="text-lg font-semibold mb-2">Tech Stack</h4>
             <ul className="list-disc list-inside text-gray-700">
-              <li>Next.js</li>
-              <li>Tailwind CSS</li>
-              <li>TypeScript</li>
+              <li>Next.js & Tailwind CSS</li>
+              <li>Node.js</li>
+              <li>MongoDB</li>
             </ul>
           </div>
 
@@ -65,6 +66,7 @@ export default function PortfolioProjectPage() {
             </p>
           </div>
         </motion.div>
+        <CommentSection projectId="portfolio" />
       </TextPageWrapper>
     </>
   );

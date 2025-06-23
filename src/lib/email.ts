@@ -8,7 +8,7 @@ export async function sendVerificationEmail(
   token: string,
   name: string
 ) {
-  const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-email?token=${token}`;
+  const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/verification?token=${token}`;
   await resend.emails.send({
     from: "noreply@verification.lucasarden.com",
     to: email,

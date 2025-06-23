@@ -17,7 +17,7 @@ export default function Projects() {
         />
         <ProjectCard
           title="Project 2: Portfolio"
-          description="A personal portfolio website built with Next.js and Tailwind CSS."
+          description="A personal portfolio website built with Next.js, Tailwind CSS and MongoDB."
           imageSrc="/images/portfolio.gif"
           imageAlt="Portfolio"
           href="/projects/portfolio"
