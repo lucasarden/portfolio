@@ -6,19 +6,21 @@ import RoundedSection from "@/app/components/RoundedSection";
 import VerifiedMessage from "@/app/components/VerifiedMessage";
 import Link from "next/link";
 
+type ErrorCode = "" | "INVALID_CREDENTIALS" | "EMAIL_NOT_VERIFIED";
+
 export default function Login() {
   const { status } = useSession();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorCode, setErrorCode] = useState<ErrorCode>("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setErrorCode("");
     setLoading(true);
 
     const res = await signIn("credentials", {
@@ -30,12 +32,45 @@ export default function Login() {
     if (res?.error) {
       setLoading(false);
       if (res.error === "Email not verified") {
-        setError("Please verify your email before logging in.");
+        setErrorCode("EMAIL_NOT_VERIFIED");
       } else {
-        setError("Invalid credentials");
+        setErrorCode("INVALID_CREDENTIALS");
       }
     } else {
       router.push("/my-account");
+    }
+  };
+
+  const handleResendVerification = async () => {
+    await fetch("/api/verification/resend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    setSuccess("Verification email resent. Please check your inbox.");
+    setErrorCode("");
+  };
+  const getErrorMessage = (code: ErrorCode) => {
+    switch (code) {
+      case "INVALID_CREDENTIALS":
+        return "Invalid email or password. Please try again.";
+      case "EMAIL_NOT_VERIFIED":
+        return (
+          <div className="text-gray-700 text-sm mt-2">
+            <p>
+              Your email is not verified. Please check your inbox for the
+              verification link.
+            </p>
+            <button
+              onClick={handleResendVerification}
+              className="text-blue-400 hover:text-blue-600 underline mt-2 cursor-pointer"
+            >
+              Didn't receive it? Click here to request a new one.
+            </button>
+          </div>
+        );
+      default:
+        return "An unexpected error occurred. Please try again later.";
     }
   };
 
@@ -56,7 +91,6 @@ export default function Login() {
           <p className="mt-4 text-lg">
             Please enter your credentials to log in.
           </p>
-
           <form onSubmit={handleLogin} className="flex flex-col space-y-4">
             <input
               type="email"
@@ -105,7 +139,11 @@ export default function Login() {
               Sign in with GitHub
             </button>
           </div>
-          {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+          {errorCode && (
+            <p className="text-gray-700 text-sm mt-2">
+              {getErrorMessage(errorCode)}
+            </p>
+          )}
           {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
           <p className="mt-4 text-md text-gray-700">
             Don't have an account?{" "}
