@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 interface ProjectPageBannerProps {
   imageSrc: string;
@@ -19,10 +19,18 @@ export default function ProjectPageBanner({
   const handleBackClick = () => {
     router.back();
   };
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  const showContent = imageLoaded && isInView;
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={showContent ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.3, ease: "easeOut" }}
       className={`h-full bg-white`}
     >
@@ -57,6 +65,7 @@ export default function ProjectPageBanner({
             width={400}
             height={400}
             className="object-cover"
+            onLoad={() => setImageLoaded(true)}
           />
         </div>
       </div>

@@ -1,10 +1,18 @@
 "use client";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 export default function Home() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  const showContent = imageLoaded && isInView;
+
   return (
     <main>
       <Banner>
@@ -22,8 +30,9 @@ export default function Home() {
         </RoundButton>
       </Banner>
       <motion.div
+        ref={ref}
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={showContent ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
       >
         <div className="flex justify-center my-8">
@@ -33,6 +42,7 @@ export default function Home() {
             width={300}
             height={300}
             className="rounded-full border-2 border-lucas-main-color"
+            onLoad={() => setImageLoaded(true)}
           />
         </div>
         <TextPageWrapper>
