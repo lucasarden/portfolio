@@ -35,13 +35,20 @@ export default function Home() {
         animate={showContent ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
       >
+        <div className="my-12 flex justify-center">
+          <iframe
+            src="/resume.pdf"
+            className="w-full max-w-4xl h-[1120px] border rounded-md shadow-md"
+            title="Lucas Arden Resume"
+          />
+        </div>
         <div className="flex justify-center my-8">
           <Image
             src="/images/lucasarden.jpg"
             alt="Lucas Arden"
             width={300}
             height={300}
-            className="rounded-full border-2 border-lucas-main-color"
+            className="rounded-full border-2 border-lucas-main-color shadow-md"
             onLoad={() => setImageLoaded(true)}
           />
         </div>
