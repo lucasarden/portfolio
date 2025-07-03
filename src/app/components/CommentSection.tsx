@@ -12,6 +12,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
         name: string;
         image: string;
       };
+      userId: string;
     }[]
   >([]);
   const [message, setMessage] = useState("");
@@ -34,6 +35,19 @@ export default function CommentSection({ projectId }: { projectId: string }) {
     });
 
     setMessage("");
+    const res = await fetch(`/api/projects/${projectId}/comments`);
+    const data = await res.json();
+    setComments(data);
+  };
+
+  const handleDelete = async (commentId: string) => {
+    const confirmed = confirm("Are you sure you want to delete this comment?");
+    if (!confirmed) return;
+
+    await fetch(`/api/projects/${projectId}/comments/${commentId}`, {
+      method: "DELETE",
+    });
+
     const res = await fetch(`/api/projects/${projectId}/comments`);
     const data = await res.json();
     setComments(data);
@@ -69,22 +83,31 @@ export default function CommentSection({ projectId }: { projectId: string }) {
         {comments.map((comment) => (
           <div
             key={comment.id}
-            className="border-t py-4 flex gap-4 items-start"
+            className="border-t w-full flex-row justify-between items-start"
           >
-            <img
-              src={comment.user?.image || "/default-avatar.png"}
-              alt={comment.user?.name || "User avatar"}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <div>
-              <p className="font-semibold">
-                {comment.user?.name || "Anonymous"}
-              </p>
-              <p className="text-sm text-gray-500">
-                {new Date(comment.createdAt).toLocaleString()}
-              </p>
-              <p className="mt-1">{comment.message}</p>
+            <div className="py-4 items-start flex gap-4">
+              <img
+                src={comment.user?.image}
+                alt={comment.user?.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div>
+                <p className="font-semibold">{comment.user?.name}</p>
+                <p className="text-sm text-gray-500">
+                  {new Date(comment.createdAt).toLocaleString()}
+                </p>
+
+                <p className="mt-1">{comment.message}</p>
+              </div>
             </div>
+            {session?.user?.id === comment.userId && (
+              <button
+                onClick={() => handleDelete(comment.id)}
+                className="text-red-500 hover:underline mt-2"
+              >
+                Delete
+              </button>
+            )}
           </div>
         ))}
       </div>

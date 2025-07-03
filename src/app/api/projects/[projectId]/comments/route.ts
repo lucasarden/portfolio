@@ -11,7 +11,11 @@ export async function GET(
   const comments = await prisma.comment.findMany({
     where: { projectId },
     orderBy: { createdAt: "desc" },
-    include: {
+    select: {
+      id: true,
+      message: true,
+      createdAt: true,
+      userId: true,
       user: {
         select: {
           name: true,
