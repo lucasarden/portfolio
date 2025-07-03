@@ -7,11 +7,16 @@ import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [resumeLoaded, setResumeLoaded] = useState(false);
 
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const mainRef = useRef(null);
+  const mainIsInView = useInView(mainRef, { once: true, margin: "-50px" });
 
-  const showContent = imageLoaded && isInView;
+  const resumeRef = useRef(null);
+  const resumeIsInView = useInView(resumeRef, { once: true, margin: "-50px" });
+
+  const showMainContent = imageLoaded && mainIsInView;
+  const showResume = resumeLoaded && resumeIsInView;
 
   return (
     <main>
@@ -30,9 +35,9 @@ export default function Home() {
         </RoundButton>
       </Banner>
       <motion.div
-        ref={ref}
+        ref={resumeRef}
         initial={{ opacity: 0, y: 20 }}
-        animate={showContent ? { opacity: 1, y: 0 } : {}}
+        animate={showResume ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
       >
         <div className="my-12 flex justify-center">
@@ -40,8 +45,16 @@ export default function Home() {
             src="/resume.pdf"
             className="w-full max-w-4xl h-[1120px] border rounded-md shadow-md"
             title="Lucas Arden Resume"
+            onLoad={() => setResumeLoaded(true)}
           />
         </div>
+      </motion.div>
+      <motion.div
+        ref={mainRef}
+        initial={{ opacity: 0, y: 20 }}
+        animate={showMainContent ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+      >
         <div className="flex justify-center my-8">
           <Image
             src="/images/lucasarden.jpg"
