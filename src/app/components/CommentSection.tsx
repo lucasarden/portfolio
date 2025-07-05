@@ -69,7 +69,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
             />
             <button
               type="submit"
-              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 cursor-pointer"
+              className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 cursor-pointer"
             >
               Submit
             </button>
@@ -83,7 +83,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
         {comments.map((comment) => (
           <div
             key={comment.id}
-            className="border-t w-full flex-row justify-between items-start"
+            className="border-t w-full flex justify-between items-start"
           >
             <div className="py-4 items-start flex gap-4">
               <img
@@ -103,7 +103,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
             {session?.user?.id === comment.userId && (
               <button
                 onClick={() => handleDelete(comment.id)}
-                className="text-red-500 hover:underline mt-2"
+                className="text-red-500 hover:underline mt-2 cursor-pointer"
               >
                 Delete
               </button>
