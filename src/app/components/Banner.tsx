@@ -3,12 +3,17 @@ import React from "react";
 interface BannerProps {
   children: React.ReactNode;
   className?: string;
+  bgColor?: string;
 }
 
-const Banner = ({ children, className }: BannerProps) => {
+const Banner = ({
+  children,
+  className,
+  bgColor = "bg-lucas-main-color",
+}: BannerProps) => {
   return (
     <div
-      className={`flex flex-col items-center justify-center w-screen h-64 bg-lucas-main-color shadow-lg ${className}`}
+      className={`flex flex-col items-center justify-center w-screen ${bgColor} shadow-lg ${className}`}
     >
       {children}
     </div>

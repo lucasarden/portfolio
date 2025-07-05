@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <main>
-      <Banner>
+      <Banner className="py-16">
         <h1 className="text-4xl font-bold text-white text-center">
           Welcome to my Portfolio!
         </h1>
@@ -34,21 +34,25 @@ export default function Home() {
           View Projects
         </RoundButton>
       </Banner>
-      <motion.div
-        ref={resumeRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={showResume ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
-      >
-        <div className="my-12 flex justify-center">
-          <iframe
-            src="/resume.pdf"
-            className="w-full max-w-4xl h-[1120px] border rounded-md shadow-md"
-            title="Lucas Arden Resume"
-            onLoad={() => setResumeLoaded(true)}
-          />
-        </div>
-      </motion.div>
+      <Banner className="py-4" bgColor="bg-white">
+        <motion.div
+          ref={resumeRef}
+          initial={{ opacity: 0, y: 20 }}
+          animate={showResume ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+        >
+          <div className="w-full max-w-4xl mx-auto">
+            <Image
+              src="/images/resume.jpg"
+              alt="Lucas Arden Resume"
+              width={2550}
+              height={3300}
+              className="top-0 left-0 w-full h-full border-none"
+              onLoad={() => setResumeLoaded(true)}
+            />
+          </div>
+        </motion.div>
+      </Banner>
       <motion.div
         ref={mainRef}
         initial={{ opacity: 0, y: 20 }}
