@@ -86,7 +86,7 @@ export default function Home() {
             onLoad={() => setImageLoaded(true)}
           />
         </div>
-        <TextPageWrapper>
+        <TextPageWrapper className="dark:bg-lucas-dark px-0">
           <h2 className="text-3xl font-bold">About Me</h2>
           <p className="mt-4 text-lg">
             I have 7 years of personal programming experience with a fundamental

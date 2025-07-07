@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 interface TextPageWrapperProps {
@@ -5,11 +6,24 @@ interface TextPageWrapperProps {
   className?: string;
 }
 
-const TextPageWrapper = ({ children, className }: TextPageWrapperProps) => {
+const TextPageWrapper = ({
+  children,
+  className = "",
+}: TextPageWrapperProps) => {
+  const defaultBg = "dark:bg-black";
+
   return (
-    <div className={`w-full dark:bg-black dark:text-white`}>
+    <div
+      className={clsx(
+        "w-full dark:text-white",
+        !className.match(/dark:bg-\S+/) && defaultBg
+      )}
+    >
       <div
-        className={`mx-auto px-8 max-w-175 pt-10 lg:max-w-300 space-y-4 ${className}`}
+        className={clsx(
+          "mx-auto max-w-175 lg:max-w-300 px-8 pt-10 space-y-4",
+          className
+        )}
       >
         {children}
       </div>
