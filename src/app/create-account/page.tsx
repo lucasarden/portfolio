@@ -49,16 +49,16 @@ export default function CreateAccount() {
 
   if (loading) {
     return (
-      <main className="flex items-center justify-center py-20">
-        <RoundedSection className="flex-col justify-center py-8 px-25 w-[484px] space-y-4 h-[512px]">
+      <main className="flex items-center justify-center py-20 dark:bg-black">
+        <RoundedSection className="flex-col justify-center py-8 px-25 w-[484px] space-y-4 h-[512px] text-lucas-main-color">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
           {success ? (
-            <span className="text-lg text-lucas-main-color font-semibold text-center">
+            <span className="text-lg font-semibold text-center dark:text-white">
               {success}
             </span>
           ) : (
             <>
-              <span className="text-lg text-lucas-main-color font-semibold text-center">
+              <span className="text-lg font-semibold text-center">
                 Loading...
               </span>
             </>
@@ -69,7 +69,7 @@ export default function CreateAccount() {
   }
 
   return (
-    <main className="flex items-center justify-center py-20">
+    <main className="flex items-center justify-center py-20 dark:bg-black">
       <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
         <h1 className="text-4xl font-bold">Create Account</h1>
         <p className="mt-4 text-lg">

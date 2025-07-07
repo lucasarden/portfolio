@@ -1,13 +1,25 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
+
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resumeLoaded, setResumeLoaded] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDarkMode(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
+    mediaQuery.addEventListener("change", handler);
+
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   const mainRef = useRef(null);
   const mainIsInView = useInView(mainRef, { once: true, margin: "-50px" });
@@ -19,8 +31,8 @@ export default function Home() {
   const showResume = resumeLoaded && resumeIsInView;
 
   return (
-    <main>
-      <Banner className="py-16">
+    <main className="dark:bg-lucas-dark">
+      <Banner className="py-16 bg-lucas-main-color dark:bg-lucas-dark">
         <h1 className="text-4xl font-bold text-white text-center">
           Welcome to my Portfolio!
         </h1>
@@ -28,13 +40,13 @@ export default function Home() {
           This is a simple portfolio site built with Next.js.
         </p>
         <RoundButton
-          className="bg-white hover:bg-lucas-white-hover py-2 px-4 mt-5"
+          className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5"
           href="/projects"
         >
           View Projects
         </RoundButton>
       </Banner>
-      <Banner className="py-4" bgColor="bg-white">
+      <Banner className="pt-4 bg-white dark:bg-black">
         <motion.div
           ref={resumeRef}
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +55,11 @@ export default function Home() {
         >
           <div className="w-full max-w-4xl mx-auto">
             <Image
-              src="/images/resume.jpg"
+              src={
+                isDarkMode
+                  ? "/images/inverted-resume.jpg"
+                  : "/images/resume.jpg"
+              }
               alt="Lucas Arden Resume"
               width={2550}
               height={3300}
@@ -58,6 +74,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={showMainContent ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+        className="dark:bg-lucas-dark dark:text-white"
       >
         <div className="flex justify-center my-8">
           <Image

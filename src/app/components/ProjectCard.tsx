@@ -46,7 +46,17 @@ export default function ProjectCard({
         transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
       >
         <div
-          className={`h-full duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%] cursor-pointer p-6 lg:space-x-12 space-y-6 lg:space-y-0 justify-center lg:justify-between items-center flex flex-col lg:flex-row bg-white rounded-xl shadow ${className}`}
+          className={clsx(
+            "h-full cursor-pointer p-6 space-y-6 justify-center items-center flex flex-col bg-white rounded-xl shadow",
+            "hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%]",
+            "lg:space-x-12 lg:space-y-0 lg:justify-between lg:flex-row",
+            "duration-200 ease-in-out",
+            "dark:bg-lucas-dark dark:text-white dark:hover:shadow-lucas-main-color",
+            className,
+            {
+              "opacity-50": !imageLoaded,
+            }
+          )}
         >
           <div>
             {imageLoaded ? (

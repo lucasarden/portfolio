@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import ProjectPageBanner from "@/app/components/ProjectPageBanner";
 import CommentSection from "@/app/components/CommentSection";
+import RoundButton from "@/app/components/RoundButton";
+import clsx from "clsx";
 
 export default function PortfolioProjectPage() {
   const title = "Project 2: Portfolio";
@@ -10,7 +12,7 @@ export default function PortfolioProjectPage() {
     "A personal portfolio website built with Next.js and Tailwind CSS.";
 
   return (
-    <>
+    <main className="dark:bg-black">
       <ProjectPageBanner
         imageSrc="/images/portfolio.gif"
         imageAlt="Portfolio"
@@ -22,22 +24,25 @@ export default function PortfolioProjectPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
-          className="max-w-275 mx-auto mt-20"
+          className="max-w-275 mx-auto"
         >
           {/* View Code button */}
-          <a
+          <RoundButton
             href="https://github.com/lucasarden/portfolio"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mb-6 px-6 py-3 rounded-md bg-black text-white hover:bg-gray-800 transition-colors font-medium"
+            className={clsx(
+              "inline-block mb-6 px-6 py-3 rounded-md bg-black text-white hover:bg-gray-800 transition-colors font-medium",
+              "dark:bg-white dark:text-black dark:hover:bg-lucas-white-hover"
+            )}
           >
             View Code on GitHub
-          </a>
+          </RoundButton>
 
           {/* Tech stack */}
           <div className="mb-6">
             <h4 className="text-lg font-semibold mb-2">Tech Stack</h4>
-            <ul className="list-disc list-inside text-gray-700">
+            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
               <li>Next.js & Tailwind CSS</li>
               <li>Node.js</li>
               <li>MongoDB</li>
@@ -47,7 +52,7 @@ export default function PortfolioProjectPage() {
           {/* Features */}
           <div className="mb-6">
             <h4 className="text-lg font-semibold mb-2">Features</h4>
-            <ul className="list-disc list-inside text-gray-700">
+            <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
               <li>Responsive design</li>
               <li>Dynamic project showcases</li>
               <li>Custom animations and transitions</li>
@@ -57,7 +62,7 @@ export default function PortfolioProjectPage() {
           {/* What I Learned */}
           <div className="mb-6">
             <h4 className="text-lg font-semibold mb-2">What I Learned</h4>
-            <p className="text-gray-700">
+            <p className="text-gray-700 dark:text-gray-300">
               This project taught me how to structure a web application using an
               object-oriented approach in TypeScript, how to implement custom
               components and hooks in React, and how to build a responsive UI
@@ -68,6 +73,6 @@ export default function PortfolioProjectPage() {
         </motion.div>
         <CommentSection projectId="portfolio" />
       </TextPageWrapper>
-    </>
+    </main>
   );
 }

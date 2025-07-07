@@ -7,9 +7,9 @@ interface TextPageWrapperProps {
 
 const TextPageWrapper = ({ children, className }: TextPageWrapperProps) => {
   return (
-    <div className={`w-full`}>
+    <div className={`w-full dark:bg-black dark:text-white`}>
       <div
-        className={`mx-auto px-8 max-w-175 py-10 lg:max-w-300 space-y-4 ${className}`}
+        className={`mx-auto px-8 max-w-175 pt-10 lg:max-w-300 space-y-4 ${className}`}
       >
         {children}
       </div>

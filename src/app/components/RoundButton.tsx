@@ -8,6 +8,8 @@ interface RoundButtonProps {
   className?: string;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  target?: string;
+  rel?: string;
 }
 
 const RoundButton = ({
@@ -16,12 +18,14 @@ const RoundButton = ({
   className = "",
   disabled,
   onClick,
+  target,
+  rel,
 }: RoundButtonProps) => {
-  // Provide sensible defaults, but allow full override via className
   const baseClasses =
     "px-4 py-2 rounded-full font-semibold transition-colors justify-center";
-  const defaultText = "text-lucas-main-color";
-  const defaultHover = "hover:bg-lucas-white-hover";
+  const defaultText = "text-lucas-main-color dark:text-white";
+  const defaultHover =
+    "hover:bg-lucas-white-hover dark:hover:bg-lucas-dark-hover";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   if (disabled) {
@@ -39,6 +43,8 @@ const RoundButton = ({
     <Link
       href={href}
       onClick={onClick}
+      target={target}
+      rel={rel}
       className={clsx(
         baseClasses,
         // Only add default text color if not present in className

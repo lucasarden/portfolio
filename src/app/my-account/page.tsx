@@ -24,10 +24,10 @@ export default function MyAccount() {
 
   if (status === "loading" || !session || !session.user) {
     return (
-      <main className="flex items-center justify-center py-20">
+      <main className="flex items-center justify-center py-20 dark:bg-black">
         <RoundedSection className="flex-col justify-center py-8 px-25 h-100 w-md space-y-4">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
-          <span className="text-lg text-lucas-main-color font-semibold">
+          <span className="text-lg text-lucas-main-color dark:text-white font-semibold">
             Loading...
           </span>
         </RoundedSection>
@@ -35,8 +35,8 @@ export default function MyAccount() {
     );
   }
   return (
-    <main className="flex items-center justify-center py-20">
-      <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
+    <main className="flex items-center justify-center py-20 dark:bg-black">
+      <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4 dark:text-white">
         <h1 className="text-4xl font-bold">Welcome!</h1>
         <p className="mt-4 text-lg">You are currently logged in as:</p>
         <p className="mt-1 text-lg">{session.user.email}</p>

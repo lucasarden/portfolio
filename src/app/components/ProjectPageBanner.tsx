@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 interface ProjectPageBannerProps {
   imageSrc: string;
   imageAlt: string;
@@ -32,12 +33,18 @@ export default function ProjectPageBanner({
       initial={{ opacity: 0, y: 20 }}
       animate={showContent ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className={`h-full bg-white`}
+      className={clsx(
+        "h-full bg-white shadow-lg",
+        "dark:bg-lucas-dark dark:text-white dark:shadow-lucas-main-color mb-5"
+      )}
     >
       <div className="lg:hidden flex items-center pt-5 px-8 max-w-350 mx-auto">
         <button
           onClick={handleBackClick}
-          className="px-4 py-2 rounded-full font-semibold transition-colors justify-center flex cursor-pointer bg-lucas-main-color hover:bg-lucas-main-color-hover text-white"
+          className={clsx(
+            "px-4 py-2 rounded-full font-semibold transition-colors justify-center flex cursor-pointer",
+            "bg-lucas-main-color hover:bg-lucas-main-color-hover text-white"
+          )}
         >
           ← Back to projects
         </button>

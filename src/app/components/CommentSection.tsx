@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import clsx from "clsx";
 
 export default function CommentSection({ projectId }: { projectId: string }) {
   const [comments, setComments] = useState<
@@ -69,7 +70,10 @@ export default function CommentSection({ projectId }: { projectId: string }) {
             />
             <button
               type="submit"
-              className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 cursor-pointer"
+              className={clsx(
+                "bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 cursor-pointer",
+                "dark:bg-white dark:text-black dark:hover:bg-lucas-dark-hover"
+              )}
             >
               Submit
             </button>

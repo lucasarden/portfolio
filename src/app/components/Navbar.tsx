@@ -58,7 +58,7 @@ const Navbar = () => {
   }: MenuButtonProps) => (
     <Link
       href={href}
-      className={`w-full text-center py-4 px-4 font-semibold ${className}`}
+      className={`w-full text-center py-4 px-4 font-semibold dark:text-white ${className}`}
       onClick={onClick}
     >
       {children}
@@ -66,7 +66,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="relative z-50">
+    <div className="relative z-50 dark:bg-lucas-dark">
       {/* Backdrop for the expanded menu */}
       <motion.div
         initial={{ height: NAVBAR_HEIGHT }}
@@ -78,7 +78,7 @@ const Navbar = () => {
             delay: menuOpen ? 0 : 0.1, // Add delay only when closing
           },
         }}
-        className="fixed top-0 left-0 w-full backdrop-blur-md bg-lucas-main-bg/80 z-[-1]"
+        className="fixed top-0 left-0 w-full backdrop-blur-md bg-lucas-main-bg/80 dark:bg-black/80 z-[-1]"
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
@@ -88,7 +88,7 @@ const Navbar = () => {
           <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
             <RoundButton
               href="/"
-              className="text-2xl font-bold text-lucas-main-color hover:bg-lucas-white-hover"
+              className="text-2xl font-bold text-lucas-main-color dark:text-white"
             >
               Lucas Arden
             </RoundButton>
@@ -104,102 +104,88 @@ const Navbar = () => {
             </nav>
           </RoundedSection>
           {/* Right rounded section */}
-          {session && session.user ? (
-            <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
-              <button
-                className="block lg:hidden"
-                aria-label="Open menu"
-                onClick={() => setMenuOpen(!menuOpen)}
+          <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
+            <button
+              className="block lg:hidden"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="hamburger"
               >
-                {/* Hamburger icon SVG */}
-                <svg
-                  width="32"
-                  height="32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                <line
+                  x1="4"
+                  y1="6"
+                  x2="20"
+                  y2="6"
+                  className={`transition-transform duration-300 origin-center ${
+                    menuOpen
+                      ? "rotate-45 translate-y-[4px] -translate-x-[4px]"
+                      : ""
+                  }`}
+                />
+                <line
+                  x1="4"
+                  y1="12"
+                  x2="20"
+                  y2="12"
+                  className={`transition-transform duration-300 ${
+                    menuOpen
+                      ? "-rotate-45 translate-y-[12px] -translate-x-[5px]"
+                      : ""
+                  }`}
+                />
+                <line
+                  x1="4"
+                  y1="18"
+                  x2="20"
+                  y2="18"
+                  className={`transition-all duration-300 origin-center ${
+                    menuOpen ? "opacity-0 translate-y-1" : ""
+                  }`}
+                />
+              </svg>
+            </button>
+            {session && session.user ? (
+              <>
+                <RoundButton
+                  onClick={handleLogout}
+                  className="hidden lg:flex border-2 border-lucas-main-color"
                 >
-                  <path d="M6 10h20M6 16h20M6 22h20" />
-                </svg>
-              </button>
-              <RoundButton
-                onClick={handleLogout}
-                className="hidden lg:flex border-2 border-lucas-main-color"
-              >
-                Log Out
-              </RoundButton>
-              <RoundButton
-                href="/my-account"
-                className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
-              >
-                My Account
-              </RoundButton>
-            </RoundedSection>
-          ) : (
-            <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
-              <button
-                className="block lg:hidden"
-                aria-label="Open menu"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="hamburger"
+                  Log Out
+                </RoundButton>
+                <RoundButton
+                  href="/my-account"
+                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
                 >
-                  <line
-                    x1="4"
-                    y1="6"
-                    x2="20"
-                    y2="6"
-                    className={`transition-transform duration-300 origin-center ${
-                      menuOpen
-                        ? "rotate-45 translate-y-[4px] -translate-x-[4px]"
-                        : ""
-                    }`}
-                  />
-                  <line
-                    x1="4"
-                    y1="12"
-                    x2="20"
-                    y2="12"
-                    className={`transition-transform duration-300 ${
-                      menuOpen
-                        ? "-rotate-45 translate-y-[12px] -translate-x-[5px]"
-                        : ""
-                    }`}
-                  />
-                  <line
-                    x1="4"
-                    y1="18"
-                    x2="20"
-                    y2="18"
-                    className={`transition-all duration-300 origin-center ${
-                      menuOpen ? "opacity-0 translate-y-1" : ""
-                    }`}
-                  />
-                </svg>
-              </button>
-              <RoundButton
-                href="/login"
-                className="hidden lg:flex border-2 border-lucas-main-color"
-              >
-                Login
-              </RoundButton>
-              <RoundButton
-                href="/create-account"
-                className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
-              >
-                Create Account
-              </RoundButton>
-            </RoundedSection>
-          )}
+                  My Account
+                </RoundButton>
+              </>
+            ) : (
+              <>
+                <RoundButton
+                  href="/login"
+                  className="hidden lg:flex border-2 border-lucas-main-color"
+                >
+                  Login
+                </RoundButton>
+                <RoundButton
+                  href="/create-account"
+                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+                >
+                  Create Account
+                </RoundButton>
+              </>
+            )}
+          </RoundedSection>
         </div>
       </div>
       {/* Dropdown menu */}

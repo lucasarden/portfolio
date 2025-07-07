@@ -18,6 +18,8 @@
   --color-lucas-white-hover: #f3f3f3;
   --color-lucas-main-bg: #fafaf9;
   --color-lucas-main-bg-hover: #f8f8f6;
+  --color-lucas-dark: #111111;
+  --color-lucas-dark-hover: #1a1a1a;
 }
 
 @media (prefers-color-scheme: dark) {

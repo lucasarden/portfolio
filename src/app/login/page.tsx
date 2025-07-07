@@ -85,7 +85,7 @@ export default function Login() {
       <Suspense>
         <VerifiedMessage setSuccess={setSuccess} />
       </Suspense>
-      <main className="flex items-center justify-center py-20">
+      <main className="flex items-center justify-center py-20 dark:bg-black">
         <RoundedSection className="flex-col justify-center py-8 px-5 space-y-4 w-full max-w-110">
           <h1 className="text-4xl font-bold">Login</h1>
           <p className="mt-4 text-lg">
@@ -145,7 +145,7 @@ export default function Login() {
             </p>
           )}
           {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
-          <p className="mt-4 text-md text-gray-700">
+          <p className="mt-4 text-md text-gray-700 dark:text-gray-400">
             Don't have an account?{" "}
             <Link
               href="/create-account"
