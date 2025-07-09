@@ -20,6 +20,7 @@
   --color-lucas-main-bg-hover: #f8f8f6;
   --color-lucas-dark: #111111;
   --color-lucas-dark-hover: #1a1a1a;
+  --shadow-all-md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
 }
 
 @media (prefers-color-scheme: dark) {

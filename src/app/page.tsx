@@ -7,15 +7,17 @@ import RoundButton from "@/app/components/RoundButton";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
 import DotMatrix from "./components/DotMatrix";
+import RoundedSection from "./components/RoundedSection";
 
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resumeLoaded, setResumeLoaded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const { isLeavingPage, resetState } = useHomepage();
+  const resetStateRef = useRef(resetState);
 
   useEffect(() => {
-    resetState();
+    resetStateRef.current();
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     setIsDarkMode(mediaQuery.matches);
 
@@ -23,7 +25,7 @@ export default function Home() {
     mediaQuery.addEventListener("change", handler);
 
     return () => mediaQuery.removeEventListener("change", handler);
-  }, [resetState]);
+  }, []);
 
   const mainRef = useRef(null);
   const mainIsInView = useInView(mainRef, { once: true, margin: "-50px" });
@@ -36,20 +38,22 @@ export default function Home() {
 
   return (
     <main className="dark:bg-black">
-      <Banner className="py-50 bg-transparent relative z-10 backdrop-blur-md">
+      <Banner className="py-48 relative z-10 px-10">
         <DotMatrix disabled={isLeavingPage} />
-        <h1 className="text-4xl font-bold text-white text-center">
-          Welcome to my Portfolio!
-        </h1>
-        <p className="mt-2 text-lg text-white text-center">
-          This is a simple portfolio site built with Next.js.
-        </p>
-        <RoundButton
-          className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5 hover:ring-lucas-main-color hover:ring-3"
-          href="/projects"
-        >
-          View Projects
-        </RoundButton>
+        <RoundedSection className="bg-lucas-main-color dark:bg-white/5 backdrop-blur-xs flex-col py-8.5 px-8 shadow-white shadow-[0_0_5px_1px_rgba(0,0,0,0.25)]">
+          <h1 className="text-4xl font-bold text-white text-center">
+            Welcome to my Portfolio!
+          </h1>
+          <p className="mt-2 text-lg text-white text-center">
+            This is a portfolio site built with Next.js.
+          </p>
+          <RoundButton
+            className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5 hover:ring-lucas-main-color hover:ring-3"
+            href="/projects"
+          >
+            View Projects
+          </RoundButton>
+        </RoundedSection>
       </Banner>
       <Banner className="pt-4 bg-white dark:bg-black z-9 relative">
         <motion.div
@@ -79,7 +83,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={showMainContent ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
-        className="dark:bg-lucas-dark dark:text-white w-screen"
+        className="dark:bg-lucas-dark dark:text-white w-full"
       >
         <div className="flex justify-center py-8">
           <Image
@@ -91,7 +95,7 @@ export default function Home() {
             onLoad={() => setImageLoaded(true)}
           />
         </div>
-        <TextPageWrapper className="dark:bg-lucas-dark px-0">
+        <TextPageWrapper className="dark:bg-lucas-dark px-0 pb-20">
           <h2 className="text-3xl font-bold">About Me</h2>
           <p className="mt-4 text-lg">
             I have 7 years of personal programming experience with a fundamental
