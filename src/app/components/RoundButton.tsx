@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import { useHomepage } from "../context/HomepageProvider";
 
 interface RoundButtonProps {
   href?: string;
@@ -10,6 +12,7 @@ interface RoundButtonProps {
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   target?: string;
   rel?: string;
+  doNotDisableMatrix?: boolean;
 }
 
 const RoundButton = ({
@@ -20,7 +23,15 @@ const RoundButton = ({
   onClick,
   target,
   rel,
+  doNotDisableMatrix = false,
 }: RoundButtonProps) => {
+  const { handleButtonClick } = useHomepage();
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (onClick) onClick(e);
+    if (!doNotDisableMatrix) handleButtonClick();
+  };
+
   const baseClasses =
     "px-4 py-2 rounded-full font-semibold transition duration-300 justify-center";
   const defaultText = "text-lucas-main-color dark:text-white";
@@ -42,7 +53,7 @@ const RoundButton = ({
   return (
     <Link
       href={href}
-      onClick={onClick}
+      onClick={handleClick}
       target={target}
       rel={rel}
       className={clsx(

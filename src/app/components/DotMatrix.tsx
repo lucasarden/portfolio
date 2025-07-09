@@ -2,7 +2,11 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import CursorFollower from "@/app/components/CursorFollower";
 
-export default function DotMatrix() {
+interface DotMatrixProps {
+  disabled?: boolean;
+}
+
+export default function DotMatrix({ disabled = false }: DotMatrixProps) {
   const [matrixSize, setMatrixSize] = useState({ width: 0, height: 0 });
   const matrixRef = useRef<HTMLInputElement | null>(null);
 
@@ -42,9 +46,25 @@ export default function DotMatrix() {
   }, [matrixSize]);
   return (
     <div className="absolute h-full w-full bg-black z-[-1]" ref={matrixRef}>
-      {posArray.map((pos, index) => (
-        <CursorFollower key={index} matrixRef={matrixRef} pos={pos} />
-      ))}
+      {posArray.map((pos, index) =>
+        disabled ? (
+          <div
+            key={index}
+            className="bg-white absolute rounded-md"
+            style={{
+              top: `${pos.y}px`,
+              left: `${pos.x}px`,
+              width: `${1.5}px`,
+              height: `${1.5}px`,
+              transform: `${0}rad)`,
+              transformOrigin: "0 0",
+              pointerEvents: "none",
+            }}
+          />
+        ) : (
+          <CursorFollower key={index} matrixRef={matrixRef} pos={pos} />
+        )
+      )}
     </div>
   );
 }

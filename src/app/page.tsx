@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useHomepage } from "./context/HomepageProvider";
 import Image from "next/image";
 import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
@@ -11,8 +12,10 @@ export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resumeLoaded, setResumeLoaded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isLeavingPage, resetState } = useHomepage();
 
   useEffect(() => {
+    resetState();
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     setIsDarkMode(mediaQuery.matches);
 
@@ -20,7 +23,7 @@ export default function Home() {
     mediaQuery.addEventListener("change", handler);
 
     return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
+  }, [resetState]);
 
   const mainRef = useRef(null);
   const mainIsInView = useInView(mainRef, { once: true, margin: "-50px" });
@@ -34,7 +37,7 @@ export default function Home() {
   return (
     <main className="dark:bg-black">
       <Banner className="py-50 bg-transparent relative z-10 backdrop-blur-md">
-        <DotMatrix />
+        <DotMatrix disabled={isLeavingPage} />
         <h1 className="text-4xl font-bold text-white text-center">
           Welcome to my Portfolio!
         </h1>

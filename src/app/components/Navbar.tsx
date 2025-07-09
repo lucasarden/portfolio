@@ -89,6 +89,7 @@ const Navbar = () => {
             <RoundButton
               href="/"
               className="text-2xl font-bold text-lucas-main-color dark:text-white"
+              doNotDisableMatrix
             >
               Lucas Arden
             </RoundButton>
