@@ -5,6 +5,7 @@ import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
+import DotMatrix from "./components/DotMatrix";
 
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -31,8 +32,9 @@ export default function Home() {
   const showResume = resumeLoaded && resumeIsInView;
 
   return (
-    <main className="dark:bg-lucas-dark">
-      <Banner className="py-16 bg-lucas-main-color dark:bg-lucas-dark">
+    <main className="dark:bg-black">
+      <Banner className="py-50 bg-transparent relative z-10 backdrop-blur-md">
+        <DotMatrix />
         <h1 className="text-4xl font-bold text-white text-center">
           Welcome to my Portfolio!
         </h1>
@@ -40,13 +42,13 @@ export default function Home() {
           This is a simple portfolio site built with Next.js.
         </p>
         <RoundButton
-          className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5"
+          className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5 hover:ring-lucas-main-color hover:ring-3"
           href="/projects"
         >
           View Projects
         </RoundButton>
       </Banner>
-      <Banner className="pt-4 bg-white dark:bg-black">
+      <Banner className="pt-4 bg-white dark:bg-black z-9 relative">
         <motion.div
           ref={resumeRef}
           initial={{ opacity: 0, y: 20 }}
@@ -74,9 +76,9 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={showMainContent ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
-        className="dark:bg-lucas-dark dark:text-white"
+        className="dark:bg-lucas-dark dark:text-white w-screen"
       >
-        <div className="flex justify-center my-8">
+        <div className="flex justify-center py-8">
           <Image
             src="/images/lucasarden.jpg"
             alt="Lucas Arden"

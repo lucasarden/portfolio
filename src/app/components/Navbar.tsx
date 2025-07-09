@@ -104,9 +104,9 @@ const Navbar = () => {
             </nav>
           </RoundedSection>
           {/* Right rounded section */}
-          <RoundedSection className="flex px-4 py-3 lg:space-x-4 lg:px-8">
+          <RoundedSection className="flex px-3 py-2.5 lg:space-x-4 lg:px-7">
             <button
-              className="block lg:hidden"
+              className="block lg:hidden cursor-pointer transition hover:bg-lucas-dark-hover rounded-md px-1 py-0.5"
               aria-label="Open menu"
               onClick={() => setMenuOpen(!menuOpen)}
             >
