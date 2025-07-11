@@ -6,6 +6,8 @@ import RoundButton from "@/app/components/dev-starving/RoundButton";
 import RoundedSection from "@/app/components/dev-starving/RoundedSection";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import SearchBar from "./SearchBar";
+import Image from "next/image";
 
 interface MenuButtonProps {
   href?: string;
@@ -82,28 +84,19 @@ const Navbar = () => {
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
-      <div className="fixed w-screen">
-        <div className="flex items-center justify-between p-6 px-8 max-w-350 mx-auto">
+      <div className="fixed w-screen border-b-2 border-gray-300">
+        <div className="flex items-center justify-between py-2 px-15 max-w-450 mx-auto space-x-6">
           {/* Left rounded section */}
-          <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
-            <RoundButton
-              href="/"
-              className="text-2xl font-bold text-lucas-main-color bg-white"
-              doNotDisableMatrix
-            >
-              Lucas Arden
-            </RoundButton>
-            <nav>
-              <ul className="hidden lg:flex space-x-6">
-                <li>
-                  <RoundButton href="/projects">Projects</RoundButton>
-                </li>
-                <li>
-                  <RoundButton href="/contact">Contact</RoundButton>
-                </li>
-              </ul>
-            </nav>
-          </RoundedSection>
+          <Link href="/dev-starving">
+            <Image
+              src="/images/starving-logo.jpg"
+              alt="Starving Logo"
+              width={120}
+              height={120}
+              className="rounded-full aspect-square object-cover border-1 border-gray-300"
+            />
+          </Link>
+          <SearchBar />
           {/* Right rounded section */}
           <RoundedSection className="flex px-3 py-2.5 lg:space-x-4 lg:px-7">
             <button
@@ -159,13 +152,13 @@ const Navbar = () => {
               <>
                 <RoundButton
                   onClick={handleLogout}
-                  className="hidden lg:flex border-2 border-lucas-main-color"
+                  className="hidden lg:flex border-2 border-black"
                 >
                   Log Out
                 </RoundButton>
                 <RoundButton
                   href="/my-account"
-                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+                  className="hidden lg:flex bg-gray-900 text-white hover:bg-gray-800"
                 >
                   My Account
                 </RoundButton>
@@ -174,13 +167,13 @@ const Navbar = () => {
               <>
                 <RoundButton
                   href="/login"
-                  className="hidden lg:flex border-2 border-lucas-main-color"
+                  className="hidden lg:flex border-2 border-black"
                 >
                   Login
                 </RoundButton>
                 <RoundButton
                   href="/create-account"
-                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+                  className="hidden lg:flex bg-gray-900 text-white hover:bg-gray-800"
                 >
                   Create Account
                 </RoundButton>

@@ -6,6 +6,7 @@ export default function Homepage() {
       <TextPageWrapper>
         <h1>Music Store Dev</h1>
         <p>This is a hidden dev route for the store.</p>
+        <div className="h-screen w-full"></div>
       </TextPageWrapper>
     </main>
   );
