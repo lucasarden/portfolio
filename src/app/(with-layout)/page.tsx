@@ -1,13 +1,13 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { useHomepage } from "./context/HomepageProvider";
+import { useHomepage } from "../context/HomepageProvider";
 import Image from "next/image";
 import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
 import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
-import DotMatrix from "./components/DotMatrix";
-import RoundedSection from "./components/RoundedSection";
+import DotMatrix from "../components/DotMatrix";
+import RoundedSection from "../components/RoundedSection";
 
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
