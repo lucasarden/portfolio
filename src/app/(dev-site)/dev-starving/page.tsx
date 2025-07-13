@@ -1,13 +1,16 @@
-import TextPageWrapper from "@/app/components/dev-starving/TextPageWrapper";
+"use client";
+import { redirect } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Homepage() {
-  return (
-    <main>
-      <TextPageWrapper>
-        <h1>Music Store Dev</h1>
-        <p>This is a hidden dev route for the store.</p>
-        <div className="h-screen w-full"></div>
-      </TextPageWrapper>
-    </main>
-  );
+export default function Page() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname) {
+      redirect(`${pathname}/santa-clara`);
+    }
+  }, [pathname]);
+
+  return null;
 }

@@ -18,7 +18,7 @@ interface MenuButtonProps {
 
 const MENU_ITEM_COUNT = 4; // Number of dropdown items
 const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
-const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
+const NAVBAR_HEIGHT = 80.45; // px, adjust to match your navbar's height
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -217,7 +217,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
       {/* Spacer to push content below the navbar */}
-      <div className="h-[120px]" />
+      <div style={{ height: NAVBAR_HEIGHT }} />
     </div>
   );
 };

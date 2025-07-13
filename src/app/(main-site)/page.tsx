@@ -8,6 +8,7 @@ import TextPageWrapper from "@/app/components/TextPageWrapper";
 import { motion, useInView } from "framer-motion";
 import DotMatrix from "../components/DotMatrix";
 import RoundedSection from "../components/RoundedSection";
+import clsx from "clsx";
 
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -40,15 +41,18 @@ export default function Home() {
     <main className="dark:bg-black">
       <Banner className="py-48 relative z-10 px-10">
         <DotMatrix disabled={isLeavingPage} />
-        <RoundedSection className="bg-lucas-main-color dark:bg-white/5 backdrop-blur-xs flex-col py-8.5 px-8 shadow-white shadow-[0_0_5px_1px_rgba(0,0,0,0.25)]">
-          <h1 className="text-4xl font-bold text-white text-center">
+        <RoundedSection className="bg-white/10 dark:bg-white/5 backdrop-blur-xs flex-col py-8.5 px-8 shadow-white shadow-[0_0_5px_1px_rgba(0,0,0,0.25)]">
+          <h1 className="text-4xl font-bold text-white dark:text-white text-center">
             Welcome to my Portfolio!
           </h1>
-          <p className="mt-2 text-lg text-white text-center">
+          <p className="mt-2 text-lg text-white dark:text-white text-center">
             This is a portfolio site built with Next.js.
           </p>
           <RoundButton
-            className="bg-white hover:bg-lucas-white-hover dark:text-black py-2 px-4 mt-5 hover:ring-lucas-main-color hover:ring-3"
+            className={clsx(
+              "bg-lucas-main-color text-white hover:bg-lucas-main-color-hover py-2 px-4 mt-5 hover:ring-white hover:ring-3",
+              "dark:bg-white dark:text-black dark:hover:bg-lucas-white-hover dark:hover:ring-lucas-main-color"
+            )}
             href="/projects"
           >
             View Projects

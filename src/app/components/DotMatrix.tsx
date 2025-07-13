@@ -45,12 +45,17 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
     return positions;
   }, [matrixSize]);
   return (
-    <div className="absolute h-full w-full bg-black z-[-1]" ref={matrixRef}>
+    <div
+      className="absolute h-full w-full bg-lucas-main-color dark:bg-black z-[-1]"
+      ref={matrixRef}
+    >
+      <div className="absolute inset-0 backdrop-blur-xs pointer-events-none z-[1]" />
+
       {posArray.map((pos, index) =>
         disabled ? (
           <div
             key={index}
-            className="bg-white absolute rounded-md"
+            className="bg-black dark:bg-white absolute rounded-md"
             style={{
               top: `${pos.y}px`,
               left: `${pos.x}px`,
