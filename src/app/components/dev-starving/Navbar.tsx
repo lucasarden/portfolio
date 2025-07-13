@@ -80,7 +80,7 @@ const Navbar = () => {
             delay: menuOpen ? 0 : 0.1, // Add delay only when closing
           },
         }}
-        className="fixed top-0 left-0 w-full backdrop-blur-md bg-lucas-main-bg/80 z-[-1]"
+        className="fixed top-0 left-0 w-full backdrop-blur-md bg-white/80 z-[-1]"
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
@@ -89,11 +89,11 @@ const Navbar = () => {
           {/* Left rounded section */}
           <Link href="/dev-starving">
             <Image
-              src="/images/starving-logo.jpg"
+              src="/images/starving-banner.jpg"
               alt="Starving Logo"
-              width={120}
-              height={120}
-              className="rounded-full aspect-square object-cover border-1 border-gray-300"
+              width={275}
+              height={65}
+              className="rounded-lg"
             />
           </Link>
           <SearchBar />

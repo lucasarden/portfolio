@@ -11,7 +11,7 @@ const TextPageWrapper = ({
   className = "",
 }: TextPageWrapperProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-white">
       <div
         className={clsx(
           "mx-auto max-w-175 lg:max-w-300 px-8 pt-10 space-y-4",
