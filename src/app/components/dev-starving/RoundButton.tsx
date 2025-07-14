@@ -23,7 +23,7 @@ const RoundButton = ({
   rel,
 }: RoundButtonProps) => {
   const baseClasses =
-    "px-4 py-2 rounded-full font-semibold transition duration-300 justify-center";
+    "px-4 py-2 rounded-full transition duration-300 justify-center";
   const defaultText = "text-black";
   const defaultHover = "hover:bg-lucas-white-hover";
   const disabledClasses = "opacity-50 cursor-not-allowed";
