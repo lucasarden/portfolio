@@ -25,7 +25,7 @@ const SearchBar = ({ className }: SearchBarProps) => {
       />
       <button
         type="submit"
-        className="h-full px-3 border-l border-gray-300 bg-white hover:bg-gray-100 flex items-center justify-center cursor-pointer"
+        className="hidden md:flex h-full px-3 border-l border-gray-300 bg-white hover:bg-gray-100 items-center justify-center cursor-pointer"
         aria-label="Search"
       >
         <FiSearch className="w-5 h-5 text-gray-600" />

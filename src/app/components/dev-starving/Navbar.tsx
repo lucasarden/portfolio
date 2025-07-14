@@ -84,8 +84,8 @@ const Navbar = () => {
         style={{ pointerEvents: "none" }}
       />
       {/* Navbar */}
-      <div className="fixed w-screen border-b-2 border-gray-300">
-        <div className="flex items-center justify-between py-2 px-15 max-w-450 mx-auto space-x-6">
+      <div className="fixed w-screen border-b-2 border-gray-300 h-[80.45px]">
+        <div className="flex items-center justify-between py-2 px-4 sm:px-7 md:px-15 max-w-450 mx-auto space-x-6">
           {/* Left rounded section */}
           <Link href="/dev-starving">
             <Image
@@ -93,7 +93,14 @@ const Navbar = () => {
               alt="Starving Logo"
               width={275}
               height={65}
-              className="rounded-lg"
+              className="hidden md:flex rounded-lg"
+            />
+            <Image
+              src="/images/starving-logo.jpg"
+              alt="Starving Logo"
+              width={65}
+              height={65}
+              className="md:hidden rounded-full"
             />
           </Link>
           <SearchBar />
