@@ -22,7 +22,7 @@ const LOCATION_CONFIG = {
 export default async function StorePage({
   params,
 }: {
-  params: { location: string };
+  params: Promise<{ location: string }>;
 }) {
   const param = await params;
   const config =
