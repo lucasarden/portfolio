@@ -9,13 +9,13 @@ const LOCATION_CONFIG = {
     image: "/images/cruz-store-white.png",
     alt: "Santa Cruz Store",
     switchHref: "./santa-clara",
-    switchLabel: "Switch to the Santa Clara store",
+    switchLabel: "Shop at the Santa Clara store",
   },
   "santa-clara": {
     image: "/images/clara-store-white.png",
     alt: "Santa Clara Store",
     switchHref: "./santa-cruz",
-    switchLabel: "Switch to the Santa Cruz store",
+    switchLabel: "Shop at the Santa Cruz store",
   },
 };
 
@@ -53,7 +53,7 @@ export default async function StorePage({
           {config.switchLabel}
         </RoundButton>
       </Banner>
-      <Banner className="bg-white py-6 flex-col px-10">
+      <Banner className="bg-white py-6 flex-col px-10 space-y-3">
         <h1 className="text-2xl text-center tracking-wide">
           Check out our newest arrivals!
         </h1>

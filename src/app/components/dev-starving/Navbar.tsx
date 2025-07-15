@@ -5,9 +5,10 @@ import Link from "next/link";
 import RoundButton from "@/app/components/dev-starving/RoundButton";
 import RoundedSection from "@/app/components/dev-starving/RoundedSection";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
+import { FaShoppingCart } from "react-icons/fa";
 
 interface MenuButtonProps {
   href?: string;
@@ -17,11 +18,16 @@ interface MenuButtonProps {
 }
 
 const MENU_ITEM_COUNT = 4; // Number of dropdown items
-const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
-const NAVBAR_HEIGHT = 80.45; // px, adjust to match your navbar's height
+const MENU_ITEM_HEIGHT = 57; // px, adjust to match the MenuButton's height
+const NAVBAR_HEIGHT = 80.45; // px, adjust to match the navbar's height
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const segments = pathname.split("/").filter(Boolean);
+  const storeSlug = segments[1];
+
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -105,7 +111,7 @@ const Navbar = () => {
           </Link>
           <SearchBar />
           {/* Right rounded section */}
-          <RoundedSection className="flex px-3 py-2.5 lg:space-x-4 lg:px-7">
+          <RoundedSection className="flex px-3 py-2.5 lg:space-x-4 lg:px-5">
             <button
               className="block lg:hidden cursor-pointer transition hover:bg-lucas-white-hover rounded-md px-1 py-0.5"
               aria-label="Open menu"
@@ -164,7 +170,7 @@ const Navbar = () => {
                   Log Out
                 </RoundButton>
                 <RoundButton
-                  href="/my-account"
+                  href={`/dev-starving/${storeSlug}/my-account`}
                   className="hidden lg:flex bg-gray-900 text-white hover:bg-gray-800"
                 >
                   My Account
@@ -172,15 +178,22 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <Link
+                  href={`/dev-starving/${storeSlug}/cart`}
+                  className="hidden lg:flex flex-col items-center rounded-full px-2 py-0.5 hover:text-cyan-600 transition duration-150"
+                >
+                  <FaShoppingCart />
+                  Cart
+                </Link>
                 <RoundButton
-                  href="/login"
+                  href={`/dev-starving/${storeSlug}/login`}
                   className="hidden lg:flex border-2 border-black"
                 >
                   Login
                 </RoundButton>
                 <RoundButton
-                  href="/create-account"
-                  className="hidden lg:flex bg-gray-900 text-white hover:bg-gray-800"
+                  href={`/dev-starving/${storeSlug}/create-account`}
+                  className="hidden lg:flex bg-gray-900 text-white hover:bg-tsm-gray"
                 >
                   Create Account
                 </RoundButton>
