@@ -1,14 +1,34 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { WaterSim } from "@/app/components/fluidSim";
+import { useTheme } from "@/app/context/ThemeProvider";
 
 interface DotMatrixProps {
   disabled?: boolean;
+  fullPage?: boolean;
 }
 
-export default function DotMatrix({ disabled = false }: DotMatrixProps) {
+const FULL_PAGE_DOT_COLORS = {
+  light: "rgba(53, 70, 95, 0.35)",
+  dark: "rgba(255, 255, 255, 0.38)",
+};
+
+export default function DotMatrix({
+  disabled = false,
+  fullPage = false,
+}: DotMatrixProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const simRef = useRef<WaterSim | null>(null);
+  const { theme } = useTheme();
+
+  const dotColor = fullPage ? FULL_PAGE_DOT_COLORS[theme] : "#ffffff";
+  const dotColorRef = useRef(dotColor);
+
+  useEffect(() => {
+    dotColorRef.current = dotColor;
+    simRef.current?.setDotColor(dotColor);
+  }, [dotColor]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -21,7 +41,9 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
     const animated = !disabled && !reducedMotion;
 
     const sim = new WaterSim(canvas);
-    const cleanups: (() => void)[] = [];
+    sim.setDotColor(dotColorRef.current);
+    simRef.current = sim;
+    const cleanups: (() => void)[] = [() => (simRef.current = null)];
 
     const resize = () => {
       sim.resize(container.clientWidth, container.clientHeight);
@@ -100,6 +122,18 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
       for (const cleanup of cleanups) cleanup();
     };
   }, [disabled]);
+
+  if (fullPage) {
+    return (
+      <div ref={containerRef} className="fixed inset-0 -z-10 overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 h-full w-full pointer-events-none"
+        />
+        <div className="absolute inset-0 pointer-events-none opacity-60 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_85%)]" />
+      </div>
+    );
+  }
 
   return (
     <div

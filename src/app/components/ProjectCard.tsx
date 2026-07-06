@@ -37,11 +37,10 @@ export default function ProjectCard({
       >
         <div
           className={clsx(
-            "h-full cursor-pointer p-6 space-y-6 justify-center items-center flex flex-col bg-white rounded-xl shadow",
-            "hover:shadow-lg hover:scale-[1.01] hover:brightness-[99%]",
+            "h-full cursor-pointer p-6 space-y-6 justify-center items-center flex flex-col rounded-xl border border-edge bg-glass backdrop-blur-md",
+            "hover:border-edge-strong hover:scale-[1.01]",
             "lg:space-x-12 lg:space-y-0 lg:justify-between lg:flex-row",
             "duration-200 ease-in-out",
-            "dark:bg-lucas-dark dark:text-white dark:hover:shadow-lucas-main-color",
             className
           )}
         >

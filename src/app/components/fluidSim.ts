@@ -17,7 +17,7 @@ const SPRING_K = 42;
 const SPRING_DAMPING = 5.5;
 const MAX_DISPLACEMENT = 20;
 
-const DOT_COLOR = "#ffffff";
+const DEFAULT_DOT_COLOR = "#ffffff";
 const IDLE_SIZE = 1.5;
 const BLADE_WIDTH = 3;
 const BLADE_MIN_LENGTH = 2.5;
@@ -356,6 +356,7 @@ export class WaterSim {
   private prevPointerY = 0;
   private hasPointer = false;
   private pointerMoved = false;
+  private dotColor = DEFAULT_DOT_COLOR;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -461,6 +462,12 @@ export class WaterSim {
     this.render();
   }
 
+  setDotColor(color: string) {
+    if (color === this.dotColor) return;
+    this.dotColor = color;
+    this.render();
+  }
+
   private rebuild() {
     const tier = TIERS[this.tierIndex];
     this.fluid = new FluidField(this.width, this.height, tier);
@@ -492,7 +499,7 @@ export class WaterSim {
     const { ctx, dots, width, height } = this;
     if (!dots) return;
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = DOT_COLOR;
+    ctx.fillStyle = this.dotColor;
 
     const { count, homeX, homeY, dispX, dispY } = dots;
     const half = IDLE_SIZE / 2;
@@ -505,7 +512,7 @@ export class WaterSim {
       }
     }
 
-    ctx.strokeStyle = DOT_COLOR;
+    ctx.strokeStyle = this.dotColor;
     ctx.lineWidth = BLADE_WIDTH;
     ctx.lineCap = "round";
     ctx.beginPath();
