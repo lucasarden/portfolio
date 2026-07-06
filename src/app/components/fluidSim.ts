@@ -41,14 +41,14 @@ const TIERS: QualityTier[] = [
   { dotSpacing: 30, fluidCell: 40, diffuseIters: 1, projectIters: 2 },
 ];
 
-const TIER_DOWN_FRAME_MS = 22;
-const TIER_UP_FRAME_MS = 9;
+const TIER_DOWN_FRAME_MS = 30;
 const TIER_CHANGE_COOLDOWN_MS = 2000;
-const TIER_UP_COOLDOWN_MS = 8000;
 
 function clamp(x: number, lo: number, hi: number) {
   return x < lo ? lo : x > hi ? hi : x;
 }
+
+const DEBUG = process.env.NODE_ENV === "development";
 
 // Grid coordinate g maps to pixel (g - 1) * cell; the border ring stays at
 // zero velocity so the water is absorbed at the edges.
@@ -150,6 +150,20 @@ class FluidField {
       if (s2 > max2) max2 = s2;
     }
     this.maxSpeed = Math.sqrt(max2);
+  }
+
+  copyFrom(old: FluidField) {
+    const { nx, ny, cell, u, v } = this;
+    for (let j = 1; j < ny - 1; j++) {
+      const y = (j - 1) * cell;
+      for (let i = 1; i < nx - 1; i++) {
+        old.sample((i - 1) * cell, y);
+        const id = i + j * nx;
+        u[id] = old.sampleX;
+        v[id] = old.sampleY;
+      }
+    }
+    this.maxSpeed = old.maxSpeed;
   }
 
   sample(x: number, y: number) {
@@ -292,6 +306,9 @@ class FluidField {
 
 class DotGrid {
   readonly count: number;
+  readonly cols: number;
+  readonly rows: number;
+  readonly spacing: number;
   readonly homeX: Float32Array;
   readonly homeY: Float32Array;
   readonly dispX: Float32Array;
@@ -304,6 +321,9 @@ class DotGrid {
   constructor(width: number, height: number, spacing: number) {
     const cols = Math.floor(width / spacing) + 1;
     const rows = Math.floor(height / spacing) + 1;
+    this.cols = cols;
+    this.rows = rows;
+    this.spacing = spacing;
     this.count = cols * rows;
     this.homeX = new Float32Array(this.count);
     this.homeY = new Float32Array(this.count);
@@ -359,6 +379,36 @@ class DotGrid {
     this.maxSpeed = 0;
     this.maxDisp = 0;
   }
+
+  copyFrom(old: DotGrid) {
+    if (old.cols < 2 || old.rows < 2) return;
+    const maxGX = old.cols - 1;
+    const maxGY = old.rows - 1;
+    for (let n = 0; n < this.count; n++) {
+      const gx = clamp(this.homeX[n] / old.spacing, 0, maxGX);
+      const gy = clamp(this.homeY[n] / old.spacing, 0, maxGY);
+      const i0 = Math.min(Math.floor(gx), maxGX - 1);
+      const j0 = Math.min(Math.floor(gy), maxGY - 1);
+      const fx = gx - i0;
+      const fy = gy - j0;
+      const w00 = (1 - fx) * (1 - fy);
+      const w10 = fx * (1 - fy);
+      const w01 = (1 - fx) * fy;
+      const w11 = fx * fy;
+      const a = i0 + j0 * old.cols;
+      const b = a + 1;
+      const c = a + old.cols;
+      const d = c + 1;
+      const blend = (arr: Float32Array) =>
+        arr[a] * w00 + arr[b] * w10 + arr[c] * w01 + arr[d] * w11;
+      this.dispX[n] = blend(old.dispX);
+      this.dispY[n] = blend(old.dispY);
+      this.velX[n] = blend(old.velX);
+      this.velY[n] = blend(old.velY);
+    }
+    this.maxSpeed = old.maxSpeed;
+    this.maxDisp = old.maxDisp;
+  }
 }
 
 export class WaterSim {
@@ -396,6 +446,7 @@ export class WaterSim {
 
   resize(width: number, height: number) {
     if (width <= 0 || height <= 0) return;
+    if (DEBUG) console.info(`[fluidSim] resize ${width}x${height}`);
     this.width = width;
     this.height = height;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -516,8 +567,12 @@ export class WaterSim {
 
   private rebuild() {
     const tier = TIERS[this.tierIndex];
+    const previousFluid = this.fluid;
+    const previousDots = this.dots;
     this.fluid = new FluidField(this.width, this.height, tier);
     this.dots = new DotGrid(this.width, this.height, tier.dotSpacing);
+    if (previousFluid) this.fluid.copyFrom(previousFluid);
+    if (previousDots) this.dots.copyFrom(previousDots);
     this.accumulator = 0;
     this.asleep = false;
   }
@@ -527,14 +582,13 @@ export class WaterSim {
     if (now - this.lastTierChange < TIER_CHANGE_COOLDOWN_MS) return;
     if (this.frameMsEma > TIER_DOWN_FRAME_MS && this.tierIndex < TIERS.length - 1) {
       this.tierIndex++;
-    } else if (
-      this.frameMsEma < TIER_UP_FRAME_MS &&
-      this.tierIndex > 0 &&
-      now - this.lastTierChange > TIER_UP_COOLDOWN_MS
-    ) {
-      this.tierIndex--;
     } else {
       return;
+    }
+    if (DEBUG) {
+      console.info(
+        `[fluidSim] tier -> ${this.tierIndex} (ema ${this.frameMsEma.toFixed(1)}ms)`
+      );
     }
     this.lastTierChange = now;
     this.frameMsEma = 16;
