@@ -6,13 +6,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, ...compat.config({
+const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     rules: {
         "@typescript-eslint/no-unused-vars": "off",
         "no-unused-vars": "off",
         "react/no-unescaped-entities": "off"
     }
-}), {
+}, {
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
 }];
 

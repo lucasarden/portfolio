@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import RoundButton from "@/app/components/RoundButton";
 import RoundedSection from "@/app/components/RoundedSection";
+import ThemeToggle from "@/app/components/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +18,21 @@ interface MenuButtonProps {
 const MENU_ITEM_COUNT = 4; // Number of dropdown items
 const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
 const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
+
+const MenuButton = ({
+  href = "",
+  children,
+  className = "",
+  onClick,
+}: MenuButtonProps) => (
+  <Link
+    href={href}
+    className={`w-full text-center py-4 px-4 font-semibold dark:text-white ${className}`}
+    onClick={onClick}
+  >
+    {children}
+  </Link>
+);
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,20 +66,7 @@ const Navbar = () => {
     router.push("/login");
   };
 
-  const MenuButton = ({
-    href = "",
-    children,
-    className = "",
-    onClick = () => setMenuOpen(false),
-  }: MenuButtonProps) => (
-    <Link
-      href={href}
-      className={`w-full text-center py-4 px-4 font-semibold dark:text-white ${className}`}
-      onClick={onClick}
-    >
-      {children}
-    </Link>
-  );
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <div className="relative z-50 dark:bg-lucas-dark">
@@ -105,7 +108,8 @@ const Navbar = () => {
             </nav>
           </RoundedSection>
           {/* Right rounded section */}
-          <RoundedSection className="flex px-3 py-2.5 lg:space-x-4 lg:px-7">
+          <RoundedSection className="flex px-3 py-2.5 space-x-2 lg:space-x-4 lg:px-7">
+            <ThemeToggle />
             <button
               className="block lg:hidden cursor-pointer transition hover:bg-lucas-dark-hover rounded-md px-1 py-0.5"
               aria-label="Open menu"
@@ -207,17 +211,27 @@ const Navbar = () => {
             className="fixed left-0 w-full flex flex-col items-center lg:hidden z-40"
             style={{ top: `${NAVBAR_HEIGHT}px` }}
           >
-            <MenuButton href="/projects">Projects</MenuButton>
-            <MenuButton href="/contact">Contact</MenuButton>
+            <MenuButton href="/projects" onClick={closeMenu}>
+              Projects
+            </MenuButton>
+            <MenuButton href="/contact" onClick={closeMenu}>
+              Contact
+            </MenuButton>
             {session && session.user ? (
               <>
-                <MenuButton href="/my-account">My Account</MenuButton>
+                <MenuButton href="/my-account" onClick={closeMenu}>
+                  My Account
+                </MenuButton>
                 <MenuButton onClick={handleLogout}>Log Out</MenuButton>
               </>
             ) : (
               <>
-                <MenuButton href="/login">Login</MenuButton>
-                <MenuButton href="/create-account">Create Account</MenuButton>
+                <MenuButton href="/login" onClick={closeMenu}>
+                  Login
+                </MenuButton>
+                <MenuButton href="/create-account" onClick={closeMenu}>
+                  Create Account
+                </MenuButton>
               </>
             )}
           </motion.div>

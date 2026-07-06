@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { useHomepage } from "@/app/context/HomepageProvider";
+import { useTheme } from "@/app/context/ThemeProvider";
 import Image from "next/image";
 import Banner from "@/app/components/Banner";
 import RoundButton from "@/app/components/RoundButton";
@@ -13,19 +14,13 @@ import clsx from "clsx";
 export default function Home() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resumeLoaded, setResumeLoaded] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
   const { isLeavingPage, resetState } = useHomepage();
   const resetStateRef = useRef(resetState);
 
   useEffect(() => {
     resetStateRef.current();
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDarkMode(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
-    mediaQuery.addEventListener("change", handler);
-
-    return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
   const mainRef = useRef(null);

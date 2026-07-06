@@ -1,47 +1,66 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f2f2f0;
+  --edge: rgba(20, 28, 42, 0.1);
+  --edge-strong: rgba(20, 28, 42, 0.18);
+  --foreground: #171c26;
+  --muted: #5c6675;
+  --accent: #35465f;
+  --accent-hover: #4a658f;
+  --accent-soft: rgba(53, 70, 95, 0.08);
+  --dot: rgba(53, 70, 95, 0.35);
+  --glass: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  --background: #0a0c10;
+  --surface: #12151b;
+  --surface-2: #191d25;
+  --edge: rgba(255, 255, 255, 0.09);
+  --edge-strong: rgba(255, 255, 255, 0.16);
+  --foreground: #e8eaee;
+  --muted: #98a2b3;
+  --accent: #8fadd9;
+  --accent-hover: #a8c2e8;
+  --accent-soft: rgba(143, 173, 217, 0.1);
+  --dot: rgba(255, 255, 255, 0.38);
+  --glass: rgba(18, 21, 27, 0.6);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-edge: var(--edge);
+  --color-edge-strong: var(--edge-strong);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-glass: var(--glass);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
+/* Legacy aliases for the pre-token classes — delete in cleanup once no lucas-* usages remain */
 @theme {
   --color-lucas-main-color: #35465f;
   --color-lucas-main-color-hover: #4a658f;
   --color-lucas-white-hover: #f3f3f3;
   --color-lucas-main-bg: #fafaf9;
   --color-lucas-main-bg-hover: #f8f8f6;
-  --color-lucas-dark: #111111;
-  --color-lucas-dark-hover: #1a1a1a;
-  --shadow-all-md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
-  --font-tsm: "SpecialElite";
-  --color-tsm-gray: #333333;
-  --color-tsm-gray-hover: #3e3e3e;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #0a0a0a;
-    --background: #fafaf9;
-  }
-}
-
-@font-face {
-  font-family: "SpecialElite";
-  src: url("/fonts/SpecialElite.ttf");
-  font-weight: normal;
-  font-style: normal;
+  --color-lucas-dark: #12151b;
+  --color-lucas-dark-hover: #191d25;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
