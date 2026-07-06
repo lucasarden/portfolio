@@ -7,7 +7,7 @@ import RoundButton from "@/app/components/RoundButton";
 import clsx from "clsx";
 
 export default function PortfolioProjectPage() {
-  const title = "Project 2: Portfolio";
+  const title = "Portfolio";
   const description =
     "A personal portfolio website built with Next.js and Tailwind CSS.";
 

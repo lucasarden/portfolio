@@ -35,7 +35,7 @@ export default function ProjectPageBanner({
       transition={{ duration: 0.3, ease: "easeOut" }}
       className={clsx(
         "h-full bg-white shadow-lg",
-        "dark:bg-lucas-dark dark:text-white dark:shadow-lucas-main-color mb-5"
+        "dark:bg-lucas-dark dark:text-white dark:shadow-lucas-main-color mb-5",
       )}
     >
       <div className="lg:hidden flex items-center pt-5 px-8 max-w-350 mx-auto">
@@ -43,7 +43,7 @@ export default function ProjectPageBanner({
           onClick={handleBackClick}
           className={clsx(
             "px-4 py-2 rounded-full font-semibold transition-colors justify-center flex cursor-pointer",
-            "bg-lucas-main-color hover:bg-lucas-main-color-hover text-white"
+            "bg-lucas-main-color hover:bg-lucas-main-color-hover text-white",
           )}
         >
           ← Back to projects
@@ -62,7 +62,7 @@ export default function ProjectPageBanner({
           <h2 className="text-2xl font-semibold text-center lg:text-left">
             {title}
           </h2>
-          <p className="mt-2 text-center lg:text-left">{description}</p>
+          <p className="mt-2 text-center lg:text-left pr-15">{description}</p>
         </div>
 
         <div className="mb-6 shadow-md rounded-md overflow-hidden">

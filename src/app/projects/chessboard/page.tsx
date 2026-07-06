@@ -7,7 +7,7 @@ import clsx from "clsx";
 import RoundButton from "@/app/components/RoundButton";
 
 export default function ChessboardProjectPage() {
-  const title = "Project 1: Chessboard";
+  const title = "Chessboard";
   const description = "A chessboard implementation using Python and Pygame.";
 
   return (
