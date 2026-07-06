@@ -24,7 +24,7 @@ function ProjectSection({
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
+    <ul className="list-disc list-inside">
       {items.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -33,8 +33,8 @@ function BulletList({ items }: { items: string[] }) {
 }
 
 const linkButtonStyles = clsx(
-  "inline-block mb-6 mr-4 px-6 py-3 rounded-md bg-black text-white hover:bg-gray-800 transition-colors font-medium",
-  "dark:bg-white dark:text-black dark:hover:bg-lucas-white-hover"
+  "inline-block mb-6 mr-4 px-6 py-3 font-medium transition-colors",
+  "bg-accent text-white hover:bg-accent-hover dark:text-background"
 );
 
 export default function ProjectDetail({ project }: { project: Project }) {
@@ -89,9 +89,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
           )}
 
           <ProjectSection heading="What I Learned">
-            <p className="text-gray-700 dark:text-gray-300">
-              {project.learned}
-            </p>
+            <p>{project.learned}</p>
           </ProjectSection>
         </motion.div>
         <CommentSection projectId={project.slug} />

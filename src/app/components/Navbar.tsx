@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import RoundButton from "@/app/components/RoundButton";
-import RoundedSection from "@/app/components/RoundedSection";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -17,7 +16,10 @@ interface MenuButtonProps {
 
 const MENU_ITEM_COUNT = 5; // Number of dropdown items
 const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
-const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
+const NAVBAR_HEIGHT = 64; // px, adjust to match your navbar's height
+
+const navLinkStyles =
+  "font-mono text-sm text-muted hover:text-foreground hover:bg-accent-soft";
 
 const MenuButton = ({
   href = "",
@@ -27,7 +29,7 @@ const MenuButton = ({
 }: MenuButtonProps) => (
   <Link
     href={href}
-    className={`w-full text-center py-4 px-4 font-semibold dark:text-white ${className}`}
+    className={`w-full text-center py-4 px-4 font-semibold ${className}`}
     onClick={onClick}
   >
     {children}
@@ -39,7 +41,6 @@ const Navbar = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // Calculate the total height needed for the blur backdrop
   const expandedHeight =
     NAVBAR_HEIGHT + (menuOpen ? MENU_ITEM_COUNT * MENU_ITEM_HEIGHT : 0);
 
@@ -69,8 +70,7 @@ const Navbar = () => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="relative z-50 dark:bg-lucas-dark print:hidden">
-      {/* Backdrop for the expanded menu */}
+    <div className="relative z-50 print:hidden">
       <motion.div
         initial={{ height: NAVBAR_HEIGHT }}
         animate={{
@@ -78,49 +78,52 @@ const Navbar = () => {
           transition: {
             duration: 0.3,
             ease: "easeInOut",
-            delay: menuOpen ? 0 : 0.1, // Add delay only when closing
+            delay: menuOpen ? 0 : 0.1,
           },
         }}
-        className="fixed top-0 left-0 w-full backdrop-blur-md bg-lucas-main-bg/80 dark:bg-black/80 z-[-1]"
+        className="fixed top-0 left-0 w-full backdrop-blur-md bg-background/80 border-b border-edge z-[-1]"
         style={{ pointerEvents: "none" }}
       />
-      {/* Navbar */}
-      <div className="fixed w-screen">
-        <div className="flex items-center justify-between p-6 px-8 max-w-350 mx-auto">
-          {/* Left rounded section */}
-          <RoundedSection className="lg:px-8 py-3 lg:space-x-8">
+      <div className="fixed w-full">
+        <div className="mx-auto flex h-16 max-w-350 items-center justify-between px-4 lg:px-8">
+          <div className="flex items-center gap-1 lg:gap-6">
             <RoundButton
               href="/"
-              className="text-2xl font-bold text-lucas-main-color dark:text-white"
+              className="px-2 text-lg font-semibold tracking-tight text-foreground"
               doNotDisableMatrix
             >
               Lucas Arden
             </RoundButton>
             <nav>
-              <ul className="hidden lg:flex space-x-6">
+              <ul className="hidden items-center gap-1 lg:flex">
                 <li>
-                  <RoundButton href="/projects">Projects</RoundButton>
+                  <RoundButton href="/projects" className={navLinkStyles}>
+                    Projects
+                  </RoundButton>
                 </li>
                 <li>
-                  <RoundButton href="/resume">Resume</RoundButton>
+                  <RoundButton href="/resume" className={navLinkStyles}>
+                    Resume
+                  </RoundButton>
                 </li>
                 <li>
-                  <RoundButton href="/contact">Contact</RoundButton>
+                  <RoundButton href="/contact" className={navLinkStyles}>
+                    Contact
+                  </RoundButton>
                 </li>
               </ul>
             </nav>
-          </RoundedSection>
-          {/* Right rounded section */}
-          <RoundedSection className="flex px-3 py-2.5 space-x-2 lg:space-x-4 lg:px-7">
+          </div>
+          <div className="flex items-center gap-2 lg:gap-3">
             <ThemeToggle />
             <button
-              className="block lg:hidden cursor-pointer transition hover:bg-lucas-dark-hover rounded-md px-1 py-0.5"
+              className="block cursor-pointer rounded-md px-1 py-0.5 transition hover:bg-accent-soft lg:hidden"
               aria-label="Open menu"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <svg
-                width="32"
-                height="32"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -166,13 +169,13 @@ const Navbar = () => {
               <>
                 <RoundButton
                   onClick={handleLogout}
-                  className="hidden lg:flex border-2 border-lucas-main-color"
+                  className="hidden border border-edge-strong font-mono text-sm hover:bg-accent-soft lg:flex"
                 >
                   Log Out
                 </RoundButton>
                 <RoundButton
                   href="/my-account"
-                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+                  className="hidden bg-accent font-mono text-sm text-white hover:bg-accent-hover dark:text-background lg:flex"
                 >
                   My Account
                 </RoundButton>
@@ -181,22 +184,21 @@ const Navbar = () => {
               <>
                 <RoundButton
                   href="/login"
-                  className="hidden lg:flex border-2 border-lucas-main-color"
+                  className="hidden border border-edge-strong font-mono text-sm hover:bg-accent-soft lg:flex"
                 >
                   Login
                 </RoundButton>
                 <RoundButton
                   href="/create-account"
-                  className="hidden lg:flex bg-lucas-main-color text-white hover:bg-lucas-main-color-hover"
+                  className="hidden bg-accent font-mono text-sm text-white hover:bg-accent-hover dark:text-background lg:flex"
                 >
                   Create Account
                 </RoundButton>
               </>
             )}
-          </RoundedSection>
+          </div>
         </div>
       </div>
-      {/* Dropdown menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -204,12 +206,12 @@ const Navbar = () => {
             animate={{
               opacity: 1,
               y: 0,
-              transition: { duration: 0.3, ease: "easeInOut", delay: 0.1 }, // fade in AFTER blur
+              transition: { duration: 0.3, ease: "easeInOut", delay: 0.1 },
             }}
             exit={{
               opacity: 0,
               y: -10,
-              transition: { duration: 0.2, ease: "easeInOut", delay: 0 }, // fade out IMMEDIATELY
+              transition: { duration: 0.2, ease: "easeInOut", delay: 0 },
             }}
             className="fixed left-0 w-full flex flex-col items-center lg:hidden z-40"
             style={{ top: `${NAVBAR_HEIGHT}px` }}
@@ -243,8 +245,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Spacer to push content below the navbar */}
-      <div className="h-[120px]" />
+      <div className="h-16" />
     </div>
   );
 };

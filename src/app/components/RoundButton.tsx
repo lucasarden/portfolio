@@ -33,10 +33,9 @@ const RoundButton = ({
   };
 
   const baseClasses =
-    "px-4 py-2 rounded-full font-semibold transition duration-300 justify-center";
-  const defaultText = "text-lucas-main-color dark:text-white";
-  const defaultHover =
-    "hover:bg-lucas-white-hover dark:hover:bg-lucas-dark-hover";
+    "px-4 py-2 rounded-md font-semibold transition duration-300 justify-center";
+  const defaultText = "text-foreground";
+  const defaultHover = "hover:bg-accent-soft";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   if (disabled) {

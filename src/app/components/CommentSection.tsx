@@ -64,15 +64,15 @@ export default function CommentSection({ projectId }: { projectId: string }) {
               value={message}
               placeholder="Your comment"
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full border px-4 py-2 rounded"
+              className="w-full rounded-md border border-edge-strong bg-background px-4 py-2"
               rows={4}
               required
             />
             <button
               type="submit"
               className={clsx(
-                "bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 cursor-pointer",
-                "dark:bg-white dark:text-black dark:hover:bg-lucas-dark-hover"
+                "cursor-pointer rounded-md px-4 py-2",
+                "bg-accent text-white hover:bg-accent-hover dark:text-background"
               )}
             >
               Submit
@@ -87,7 +87,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
         {comments.map((comment) => (
           <div
             key={comment.id}
-            className="border-t w-full flex justify-between items-start"
+            className="border-t border-edge w-full flex justify-between items-start"
           >
             <div className="py-4 items-start flex gap-4">
               <img
@@ -97,7 +97,7 @@ export default function CommentSection({ projectId }: { projectId: string }) {
               />
               <div>
                 <p className="font-semibold">{comment.user?.name}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted">
                   {new Date(comment.createdAt).toLocaleString()}
                 </p>
 

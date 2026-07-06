@@ -49,11 +49,11 @@ export default function CreateAccount() {
 
   if (loading) {
     return (
-      <main className="flex items-center justify-center py-20 dark:bg-black">
-        <RoundedSection className="flex-col justify-center py-8 px-25 w-[484px] space-y-4 h-[512px] text-lucas-main-color">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-lucas-main-color mb-4"></div>
+      <main className="flex items-center justify-center py-20">
+        <RoundedSection className="flex-col justify-center py-8 px-8 lg:px-25 w-[484px] max-w-full space-y-4 h-[512px] text-accent">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-accent mb-4"></div>
           {success ? (
-            <span className="text-lg font-semibold text-center dark:text-white">
+            <span className="text-lg font-semibold text-center text-foreground">
               {success}
             </span>
           ) : (
@@ -69,8 +69,8 @@ export default function CreateAccount() {
   }
 
   return (
-    <main className="flex items-center justify-center py-20 dark:bg-black">
-      <RoundedSection className="flex-col justify-center py-8 px-25 space-y-4">
+    <main className="flex items-center justify-center py-20">
+      <RoundedSection className="flex-col justify-center py-8 px-8 lg:px-25 space-y-4">
         <h1 className="text-4xl font-bold">Create Account</h1>
         <p className="mt-4 text-lg">
           Fill out the form to create your account.
@@ -81,7 +81,7 @@ export default function CreateAccount() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
+            className="rounded-md border border-edge-strong bg-background p-2"
             required
           />
           <input
@@ -89,7 +89,7 @@ export default function CreateAccount() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
+            className="rounded-md border border-edge-strong bg-background p-2"
             required
           />
           <input
@@ -97,7 +97,7 @@ export default function CreateAccount() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
+            className="rounded-md border border-edge-strong bg-background p-2"
             required
           />
           <input
@@ -105,11 +105,11 @@ export default function CreateAccount() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
+            className="rounded-md border border-edge-strong bg-background p-2"
           />
           <button
             type="submit"
-            className="font-semibold cursor-pointer bg-lucas-main-color text-white rounded-lg p-2 hover:bg-lucas-main-color-hover"
+            className="font-semibold cursor-pointer bg-accent text-white dark:text-background rounded-md p-2 hover:bg-accent-hover"
           >
             Create Account
           </button>

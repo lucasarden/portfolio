@@ -13,8 +13,8 @@ interface ProjectPageBannerProps {
 }
 
 const backButtonStyles = clsx(
-  "px-4 py-2 rounded-full font-semibold transition-colors justify-center flex cursor-pointer",
-  "bg-lucas-main-color hover:bg-lucas-main-color-hover text-white"
+  "px-4 py-2 rounded-md font-mono text-sm transition-colors justify-center flex cursor-pointer",
+  "border border-edge-strong hover:bg-accent-soft"
 );
 
 export default function ProjectPageBanner({
@@ -35,10 +35,7 @@ export default function ProjectPageBanner({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className={clsx(
-        "h-full bg-white shadow-lg",
-        "dark:bg-lucas-dark dark:text-white dark:shadow-lucas-main-color mb-5"
-      )}
+      className="h-full border-b border-edge bg-surface mb-5"
     >
       <div className="lg:hidden flex items-center pt-5 px-8 max-w-350 mx-auto">
         <button onClick={goBack} className={backButtonStyles}>
