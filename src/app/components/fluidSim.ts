@@ -17,6 +17,10 @@ const SPRING_K = 42;
 const SPRING_DAMPING = 5.5;
 const MAX_DISPLACEMENT = 20;
 
+const POKE_STRENGTH = 120;
+const SCROLL_FLOW_COUPLING = 0.8;
+const MAX_SCROLL_FLOW = 60;
+
 const DEFAULT_DOT_COLOR = "#ffffff";
 const IDLE_SIZE = 1.5;
 const BLADE_WIDTH = 3;
@@ -99,6 +103,41 @@ class FluidField {
         const id = i + j * nx;
         u[id] += fx * falloff;
         v[id] += fy * falloff;
+      }
+    }
+  }
+
+  // A radial push would be cancelled by the pressure projection (it is pure
+  // divergence), so a poke swirls instead: azimuthal flow is divergence-free.
+  splatVortex(x: number, y: number, strength: number) {
+    const { nx, ny, cell, u, v } = this;
+    const r = SPLAT_RADIUS;
+    const r2 = r * r;
+    const minI = Math.max(1, Math.floor((x - r) / cell) + 1);
+    const maxI = Math.min(nx - 2, Math.ceil((x + r) / cell) + 1);
+    const minJ = Math.max(1, Math.floor((y - r) / cell) + 1);
+    const maxJ = Math.min(ny - 2, Math.ceil((y + r) / cell) + 1);
+    for (let j = minJ; j <= maxJ; j++) {
+      const dy = (j - 1) * cell - y;
+      for (let i = minI; i <= maxI; i++) {
+        const dx = (i - 1) * cell - x;
+        const d2 = dx * dx + dy * dy;
+        if (d2 >= r2 || d2 === 0) continue;
+        const falloff = 1 - d2 / r2;
+        const push = (strength * falloff) / Math.sqrt(d2);
+        const id = i + j * nx;
+        u[id] += -dy * push;
+        v[id] += dx * push;
+      }
+    }
+  }
+
+  addUniformFlow(fy: number) {
+    const { nx, ny, v } = this;
+    for (let j = 1; j < ny - 1; j++) {
+      const row = j * nx;
+      for (let i = 1; i < nx - 1; i++) {
+        v[i + row] += fy;
       }
     }
   }
@@ -387,6 +426,33 @@ export class WaterSim {
     this.hasPointer = true;
   }
 
+  jumpPointer(x: number, y: number) {
+    this.pointerX = x;
+    this.pointerY = y;
+    this.prevPointerX = x;
+    this.prevPointerY = y;
+    this.hasPointer = true;
+    this.pointerMoved = false;
+  }
+
+  poke(x: number, y: number) {
+    if (!this.fluid) return;
+    const spin = Math.random() < 0.5 ? -1 : 1;
+    this.fluid.splatVortex(x, y, POKE_STRENGTH * spin);
+    this.asleep = false;
+  }
+
+  addScrollFlow(scrollDelta: number) {
+    if (!this.fluid || scrollDelta === 0) return;
+    const flow = clamp(
+      -scrollDelta * SCROLL_FLOW_COUPLING,
+      -MAX_SCROLL_FLOW,
+      MAX_SCROLL_FLOW
+    );
+    this.fluid.addUniformFlow(flow);
+    this.asleep = false;
+  }
+
   resetClock() {
     this.lastTime = -1;
   }
@@ -431,6 +497,7 @@ export class WaterSim {
     if (this.asleep) return;
 
     this.accumulator = Math.min(this.accumulator + dt, FIXED_DT * MAX_STEPS_PER_FRAME);
+    let stepped = false;
     while (this.accumulator >= FIXED_DT) {
       if (stirring) {
         this.fluid.splat(this.pointerX, this.pointerY, pvx * SPLAT_STRENGTH, pvy * SPLAT_STRENGTH);
@@ -438,11 +505,13 @@ export class WaterSim {
       this.fluid.step(FIXED_DT);
       this.dots.step(FIXED_DT, this.fluid);
       this.accumulator -= FIXED_DT;
+      stepped = true;
     }
 
     this.render();
 
     if (
+      stepped &&
       !stirring &&
       this.fluid.maxSpeed < SLEEP_FLUID_SPEED &&
       this.dots.maxSpeed < SLEEP_DOT_SPEED &&

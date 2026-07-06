@@ -3,7 +3,7 @@ import { FiDownload } from "react-icons/fi";
 import { resume } from "@/lib/resume";
 
 export const metadata: Metadata = {
-  title: "Résumé — Lucas Arden",
+  title: "Résumé · Lucas Arden",
   description:
     "Résumé of Lucas Arden, full-stack software engineer (TypeScript / React / Node).",
 };

@@ -91,6 +91,44 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
         window.removeEventListener("pointermove", onPointerMove)
       );
 
+      const onTouchMove = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        pointer.clientX = touch.clientX;
+        pointer.clientY = touch.clientY;
+        pointer.active = true;
+      };
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+      cleanups.push(() =>
+        window.removeEventListener("touchmove", onTouchMove)
+      );
+
+      const onTouchStart = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        pointer.clientX = touch.clientX;
+        pointer.clientY = touch.clientY;
+        pointer.active = true;
+        const rect = container.getBoundingClientRect();
+        sim.jumpPointer(touch.clientX - rect.left, touch.clientY - rect.top);
+        sim.poke(touch.clientX - rect.left, touch.clientY - rect.top);
+      };
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      cleanups.push(() =>
+        window.removeEventListener("touchstart", onTouchStart)
+      );
+
+      if (window.matchMedia("(pointer: coarse)").matches) {
+        let lastScrollY = window.scrollY;
+        const onScroll = () => {
+          const delta = window.scrollY - lastScrollY;
+          lastScrollY = window.scrollY;
+          sim.addScrollFlow(delta);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        cleanups.push(() => window.removeEventListener("scroll", onScroll));
+      }
+
       const onVisibilityChange = () => {
         pageVisible = document.visibilityState === "visible";
         syncRunning();

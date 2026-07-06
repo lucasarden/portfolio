@@ -77,7 +77,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="max-w-3xl rounded-2xl border border-edge bg-glass p-8 backdrop-blur-md lg:p-12"
+            className="max-w-3xl rounded-2xl border border-edge bg-glass p-8 backdrop-blur-md lg:p-12 text-center lg:text-left"
           >
             <p className="font-mono text-xs uppercase tracking-widest text-muted">
               Software Engineer · Santa Cruz, CA
@@ -86,12 +86,12 @@ export default function Home() {
               Lucas Arden
             </h1>
             <p className="mt-6 text-lg text-muted">
-              I build fast, polished web software — most recently a retail
-              company's entire e-commerce platform, solo. The dots behind this
-              text are a hand-written Navier–Stokes fluid simulation: drag your
-              cursor through them.
+              I build fast, polished web software. Most recently: a retail
+              company's entire e-commerce platform, built solo. The dots
+              behind this text are a hand-written Navier-Stokes fluid sim.
+              Give them a swipe.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
               <RoundButton
                 href="#projects"
                 doNotDisableMatrix
@@ -132,7 +132,7 @@ export default function Home() {
 
         <Reveal className="py-16 pb-24">
           <div className="rounded-2xl border border-edge bg-glass p-8 backdrop-blur-md lg:p-12">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-center">
+            <div className="flex flex-col items-center gap-8 lg:flex-row">
               <Image
                 src="/images/lucasarden.jpg"
                 alt="Lucas Arden"
@@ -140,7 +140,7 @@ export default function Home() {
                 height={160}
                 className="h-40 w-40 shrink-0 rounded-full border-2 border-accent object-cover"
               />
-              <div>
+              <div className="text-center lg:text-left">
                 <p className="font-mono text-xs uppercase tracking-widest text-muted">
                   About
                 </p>
@@ -150,17 +150,17 @@ export default function Home() {
                 <p className="mt-4 text-lg">
                   I'm a full-stack engineer with a B.S. in Computer Science
                   from UC Santa Cruz. Most recently I rebuilt The Starving
-                  Musician's entire digital stack solo — e-commerce platform,
+                  Musician's entire digital stack solo: e-commerce platform,
                   marketplace integrations, a POS database migration, and
-                  PCI-compliant payment automation — with measurable revenue
-                  impact.
+                  PCI-compliant payment automation, all with measurable
+                  revenue impact.
                 </p>
                 <p className="mt-4 text-lg">
                   Away from work I'm usually deep in a personal project, like
-                  the fluid simulation running behind this page. Open to
-                  remote or on-site — willing to relocate.
+                  the fluid sim running behind this page. Open to remote or
+                  on-site, and willing to relocate.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-6">
+                <div className="mt-6 flex flex-wrap gap-6 justify-center lg:justify-start">
                   <ContactLink
                     href="mailto:lucas91913@gmail.com"
                     icon={<FiMail className="size-4" />}
