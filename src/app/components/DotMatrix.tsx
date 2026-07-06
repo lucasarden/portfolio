@@ -118,17 +118,6 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
         window.removeEventListener("touchstart", onTouchStart)
       );
 
-      if (window.matchMedia("(pointer: coarse)").matches) {
-        let lastScrollY = window.scrollY;
-        const onScroll = () => {
-          const delta = window.scrollY - lastScrollY;
-          lastScrollY = window.scrollY;
-          sim.addScrollFlow(delta);
-        };
-        window.addEventListener("scroll", onScroll, { passive: true });
-        cleanups.push(() => window.removeEventListener("scroll", onScroll));
-      }
-
       const onVisibilityChange = () => {
         pageVisible = document.visibilityState === "visible";
         syncRunning();
@@ -158,7 +147,10 @@ export default function DotMatrix({ disabled = false }: DotMatrixProps) {
   }, [disabled]);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 -z-10 overflow-hidden">
+    <div
+      ref={containerRef}
+      className="fixed inset-0 -z-10 h-lvh overflow-hidden"
+    >
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full pointer-events-none"

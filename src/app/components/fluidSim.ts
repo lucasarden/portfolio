@@ -18,8 +18,6 @@ const SPRING_DAMPING = 5.5;
 const MAX_DISPLACEMENT = 20;
 
 const POKE_STRENGTH = 120;
-const SCROLL_FLOW_COUPLING = 0.8;
-const MAX_SCROLL_FLOW = 60;
 
 const DEFAULT_DOT_COLOR = "#ffffff";
 const IDLE_SIZE = 1.5;
@@ -128,16 +126,6 @@ class FluidField {
         const id = i + j * nx;
         u[id] += -dy * push;
         v[id] += dx * push;
-      }
-    }
-  }
-
-  addUniformFlow(fy: number) {
-    const { nx, ny, v } = this;
-    for (let j = 1; j < ny - 1; j++) {
-      const row = j * nx;
-      for (let i = 1; i < nx - 1; i++) {
-        v[i + row] += fy;
       }
     }
   }
@@ -439,17 +427,6 @@ export class WaterSim {
     if (!this.fluid) return;
     const spin = Math.random() < 0.5 ? -1 : 1;
     this.fluid.splatVortex(x, y, POKE_STRENGTH * spin);
-    this.asleep = false;
-  }
-
-  addScrollFlow(scrollDelta: number) {
-    if (!this.fluid || scrollDelta === 0) return;
-    const flow = clamp(
-      -scrollDelta * SCROLL_FLOW_COUPLING,
-      -MAX_SCROLL_FLOW,
-      MAX_SCROLL_FLOW
-    );
-    this.fluid.addUniformFlow(flow);
     this.asleep = false;
   }
 
