@@ -70,7 +70,7 @@ export default function Home() {
 
   return (
     <main>
-      <DotMatrix fullPage disabled={isLeavingPage} />
+      <DotMatrix disabled={isLeavingPage} />
       <div className="mx-auto max-w-350 px-8">
         <section className="flex min-h-[calc(100svh-180px)] items-center">
           <motion.div

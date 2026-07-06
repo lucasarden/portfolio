@@ -5,24 +5,20 @@ import { useTheme } from "@/app/context/ThemeProvider";
 
 interface DotMatrixProps {
   disabled?: boolean;
-  fullPage?: boolean;
 }
 
-const FULL_PAGE_DOT_COLORS = {
+const DOT_COLORS = {
   light: "rgba(53, 70, 95, 0.35)",
   dark: "rgba(255, 255, 255, 0.38)",
 };
 
-export default function DotMatrix({
-  disabled = false,
-  fullPage = false,
-}: DotMatrixProps) {
+export default function DotMatrix({ disabled = false }: DotMatrixProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const simRef = useRef<WaterSim | null>(null);
   const { theme } = useTheme();
 
-  const dotColor = fullPage ? FULL_PAGE_DOT_COLORS[theme] : "#ffffff";
+  const dotColor = DOT_COLORS[theme];
   const dotColorRef = useRef(dotColor);
 
   useEffect(() => {
@@ -123,28 +119,13 @@ export default function DotMatrix({
     };
   }, [disabled]);
 
-  if (fullPage) {
-    return (
-      <div ref={containerRef} className="fixed inset-0 -z-10 overflow-hidden">
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 h-full w-full pointer-events-none"
-        />
-        <div className="absolute inset-0 pointer-events-none opacity-60 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_85%)]" />
-      </div>
-    );
-  }
-
   return (
-    <div
-      ref={containerRef}
-      className="absolute h-full w-full overflow-hidden bg-lucas-main-color dark:bg-black z-[-1]"
-    >
+    <div ref={containerRef} className="fixed inset-0 -z-10 overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full pointer-events-none"
       />
-      <div className="absolute inset-0 backdrop-blur-xs pointer-events-none z-[1]" />
+      <div className="absolute inset-0 pointer-events-none opacity-60 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_85%)]" />
     </div>
   );
 }

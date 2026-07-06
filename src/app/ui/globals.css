@@ -48,17 +48,6 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-/* Legacy aliases for the pre-token classes — delete in cleanup once no lucas-* usages remain */
-@theme {
-  --color-lucas-main-color: #35465f;
-  --color-lucas-main-color-hover: #4a658f;
-  --color-lucas-white-hover: #f3f3f3;
-  --color-lucas-main-bg: #fafaf9;
-  --color-lucas-main-bg-hover: #f8f8f6;
-  --color-lucas-dark: #12151b;
-  --color-lucas-dark-hover: #191d25;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);

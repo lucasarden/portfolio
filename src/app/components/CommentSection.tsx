@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import clsx from "clsx";
 
 export default function CommentSection({ projectId }: { projectId: string }) {
@@ -90,11 +91,19 @@ export default function CommentSection({ projectId }: { projectId: string }) {
             className="border-t border-edge w-full flex justify-between items-start"
           >
             <div className="py-4 items-start flex gap-4">
-              <img
-                src={comment.user?.image}
-                alt={comment.user?.name}
-                className="w-10 h-10 rounded-full object-cover"
-              />
+              {comment.user?.image ? (
+                <Image
+                  src={comment.user.image}
+                  alt={comment.user.name}
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft font-semibold text-accent">
+                  {comment.user?.name?.[0] ?? "?"}
+                </div>
+              )}
               <div>
                 <p className="font-semibold">{comment.user?.name}</p>
                 <p className="text-sm text-muted">
