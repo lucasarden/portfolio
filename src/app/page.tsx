@@ -100,8 +100,7 @@ export default function Home() {
                 View Projects
               </RoundButton>
               <RoundButton
-                href="/resume.pdf"
-                target="_blank"
+                href="/resume"
                 className="border border-edge-strong px-6 py-3 hover:bg-accent-soft"
               >
                 Résumé →

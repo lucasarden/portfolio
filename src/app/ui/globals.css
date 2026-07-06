@@ -64,3 +64,21 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  .dark {
+    --background: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f2f2f0;
+    --edge: rgba(20, 28, 42, 0.15);
+    --edge-strong: rgba(20, 28, 42, 0.25);
+    --foreground: #171c26;
+    --muted: #5c6675;
+    --accent: #35465f;
+    --accent-hover: #4a658f;
+  }
+}

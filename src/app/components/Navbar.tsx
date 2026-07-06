@@ -15,7 +15,7 @@ interface MenuButtonProps {
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const MENU_ITEM_COUNT = 4; // Number of dropdown items
+const MENU_ITEM_COUNT = 5; // Number of dropdown items
 const MENU_ITEM_HEIGHT = 57; // px, adjust to match your MenuButton's height
 const NAVBAR_HEIGHT = 120; // px, adjust to match your navbar's height
 
@@ -69,7 +69,7 @@ const Navbar = () => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="relative z-50 dark:bg-lucas-dark">
+    <div className="relative z-50 dark:bg-lucas-dark print:hidden">
       {/* Backdrop for the expanded menu */}
       <motion.div
         initial={{ height: NAVBAR_HEIGHT }}
@@ -100,6 +100,9 @@ const Navbar = () => {
               <ul className="hidden lg:flex space-x-6">
                 <li>
                   <RoundButton href="/projects">Projects</RoundButton>
+                </li>
+                <li>
+                  <RoundButton href="/resume">Resume</RoundButton>
                 </li>
                 <li>
                   <RoundButton href="/contact">Contact</RoundButton>
@@ -213,6 +216,9 @@ const Navbar = () => {
           >
             <MenuButton href="/projects" onClick={closeMenu}>
               Projects
+            </MenuButton>
+            <MenuButton href="/resume" onClick={closeMenu}>
+              Resume
             </MenuButton>
             <MenuButton href="/contact" onClick={closeMenu}>
               Contact
