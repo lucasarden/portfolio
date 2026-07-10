@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { useHomepage } from "@/app/context/HomepageProvider";
 import DotMatrix from "@/app/components/DotMatrix";
 import ProjectCard from "@/app/components/ProjectCard";
@@ -39,15 +39,18 @@ function ContactLink({
   href,
   icon,
   label,
+  download = false,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
+  download?: boolean;
 }) {
   const external = href.startsWith("http");
   return (
     <a
       href={href}
+      download={download || undefined}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
       className="flex items-center gap-2 font-mono text-sm text-accent transition hover:text-accent-hover"
@@ -106,10 +109,33 @@ export default function Home() {
                 Résumé →
               </RoundButton>
             </div>
+            <div className="mt-6 flex flex-wrap gap-6 justify-center lg:justify-start">
+              <ContactLink
+                href="mailto:lucas91913@gmail.com"
+                icon={<FiMail className="size-4" />}
+                label="Email"
+              />
+              <ContactLink
+                href="https://github.com/lucasarden"
+                icon={<FiGithub className="size-4" />}
+                label="GitHub"
+              />
+              <ContactLink
+                href="https://www.linkedin.com/in/lucas-arden-22177818a/"
+                icon={<FiLinkedin className="size-4" />}
+                label="LinkedIn"
+              />
+              <ContactLink
+                href="/resume.pdf"
+                download
+                icon={<FiDownload className="size-4" />}
+                label="Download Résumé"
+              />
+            </div>
           </motion.div>
         </section>
 
-        <Reveal id="projects" className="scroll-mt-28 py-16">
+        <Reveal id="projects" className="scroll-mt-28 mt-48 py-16 lg:mt-0">
           <p className="font-mono text-xs uppercase tracking-widest text-muted">
             Selected Work
           </p>
@@ -130,7 +156,7 @@ export default function Home() {
           </div>
         </Reveal>
 
-        <Reveal className="py-16 pb-24">
+        <Reveal className="mt-48 py-16 pb-24 lg:mt-0">
           <div className="rounded-2xl border border-edge bg-glass p-8 backdrop-blur-md lg:p-12">
             <div className="flex flex-col items-center gap-8 lg:flex-row">
               <Image
